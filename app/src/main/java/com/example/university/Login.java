@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 if (usersData.getIsLecturer() != null && usersData.getIsLecturer().equals("1")) {
-                                    Intent  intent = new Intent(Login.this, MainActivity.class);
+                                    Intent  intent = new Intent(Login.this, Lecturer.class);
                                     startActivity(intent);
                                 }
                                 else if (usersData.getIsStudent() != null && usersData.getIsStudent().equals("1")) {
@@ -110,7 +110,7 @@ public class Login extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                                 else if (usersData.getIsAdmin() != null && usersData.getIsAdmin().equals("1")) {
-                                    Intent  intent = new Intent(Login.this, MainActivity.class);
+                                    Intent  intent = new Intent(Login.this, Admin.class);
                                     startActivity(intent);
                                 }
                             }

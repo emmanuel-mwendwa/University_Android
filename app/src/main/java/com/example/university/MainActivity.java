@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 if (usersData.getIsLecturer() != null && usersData.getIsLecturer().equals("1")) {
-                                    Intent  intent = new Intent(MainActivity.this, MainActivity.class);
+                                    Intent  intent = new Intent(MainActivity.this, Lecturer.class);
                                     startActivity(intent);
                                 }
                                 else if (usersData.getIsStudent() != null && usersData.getIsStudent().equals("1")) {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                                 else if (usersData.getIsAdmin() != null && usersData.getIsAdmin().equals("1")) {
-                                    Intent  intent = new Intent(MainActivity.this, MainActivity.class);
+                                    Intent  intent = new Intent(MainActivity.this, Admin.class);
                                     startActivity(intent);
                                 }
                             }
