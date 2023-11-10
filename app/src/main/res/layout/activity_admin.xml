@@ -7,11 +7,75 @@
     tools:context=".Admin">
 
     <TextView
+        android:id="@+id/adminWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Admin Dashboard"
+        android:text="Welcome"
         android:textSize="18sp"
+        android:gravity="center"
         android:layout_marginTop="50dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adminWelcome"
+        android:layout_marginTop= "80dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/addNewCourseActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Course"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:padding="17dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/buttons"/>
+
+        <Button
+            android:id="@+id/addNewAccountActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:padding="17dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/buttons"/>
+
+        <Button
+            android:id="@+id/generateReportsActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Course"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:padding="17dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/buttons"/>
+
+        <Button
+            android:id="@+id/editMarksActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:padding="17dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/buttons"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/adminLogoutButton"
