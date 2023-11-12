@@ -43,18 +43,14 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-                finish();
+                new Includes().navigateTo(MainActivity.this, Login.class);
             }
         });
 
         joinNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Signup.class);
-                startActivity(intent);
-                finish();
+                new Includes().navigateTo(MainActivity.this, Signup.class);
             }
         });
         
@@ -90,16 +86,13 @@ public class MainActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 if (usersData.getIsLecturer() != null && usersData.getIsLecturer().equals("1")) {
-                                    Intent  intent = new Intent(MainActivity.this, Lecturer.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(MainActivity.this, Lecturer.class);
                                 }
                                 else if (usersData.getIsStudent() != null && usersData.getIsStudent().equals("1")) {
-                                    Intent  intent = new Intent(MainActivity.this, Student.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(MainActivity.this, Student.class);
                                 }
                                 else if (usersData.getIsAdmin() != null && usersData.getIsAdmin().equals("1")) {
-                                    Intent  intent = new Intent(MainActivity.this, Admin.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(MainActivity.this, Admin.class);
                                 }
                             }
                             else {

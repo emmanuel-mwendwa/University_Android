@@ -23,39 +23,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/slogan_category"
-        android:inputType="text"
-        android:layout_marginTop="50dp"
-        android:padding="20dp"
-        android:hint="Course name"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="180dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/input_design" />
+        android:background="@drawable/input_design"
+        android:hint="Course name"
+        android:inputType="text"
+        android:padding="20dp" />
 
     <EditText
         android:id="@+id/course_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/course_name"
-        android:inputType="text"
-        android:layout_marginTop="15dp"
-        android:padding="20dp"
-        android:hint="Course name"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/input_design" />
+        android:background="@drawable/input_design"
+        android:hint="Course code"
+        android:inputType="text"
+        android:padding="20dp" />
 
     <EditText
         android:id="@+id/lecturer_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/course_code"
-        android:inputType="text"
-        android:layout_marginTop="15dp"
-        android:padding="20dp"
-        android:hint="Course name"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="27dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/input_design" />
+        android:background="@drawable/input_design"
+        android:hint="Lecturer Email"
+        android:inputType="text"
+        android:padding="20dp" />
 
     <Button
         android:id="@+id/addNewCourse"

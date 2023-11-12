@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +30,9 @@ import java.util.Objects;
 public class Signup extends AppCompatActivity {
 
     private Button createAccountButton;
-    private EditText inputReg, inputName, inputEmail, inputPassword, inputConfirmPassword;
+    private EditText inputReg, inputName, inputEmail;
+
+    private TextInputLayout inputPasswordLayout, inputConfirmPasswordLayout;
 
     boolean valid = true;
 
@@ -46,8 +49,8 @@ public class Signup extends AppCompatActivity {
         inputReg = (EditText) findViewById(R.id.register_reg_input);
         inputName = (EditText) findViewById(R.id.register_name_input);
         inputEmail = (EditText) findViewById(R.id.register_email_input);
-        inputPassword = (EditText) findViewById(R.id.register_password_input);
-        inputConfirmPassword = (EditText) findViewById(R.id.register_confirm_password_input);
+        inputPasswordLayout = (TextInputLayout) findViewById(R.id.register_password_input);
+        inputConfirmPasswordLayout = (TextInputLayout) findViewById(R.id.register_confirm_password_input);
         isLecturerAccount = (CheckBox) findViewById(R.id.is_Lecturer);
         isStudentAccount = (CheckBox) findViewById(R.id.is_Student);
         loadingBar = new ProgressDialog(this);
@@ -83,8 +86,8 @@ public class Signup extends AppCompatActivity {
         checkField(inputReg);
         checkField(inputName);
         checkField(inputEmail);
-        checkField(inputPassword);
-        checkField(inputConfirmPassword);
+        checkField(inputPasswordLayout.getEditText());
+        checkField(inputConfirmPasswordLayout.getEditText());
 
         // check validation
         if (!(isLecturerAccount.isChecked() || isStudentAccount.isChecked())) {
@@ -101,8 +104,8 @@ public class Signup extends AppCompatActivity {
             String reg = inputReg.getText().toString();
             String name = inputName.getText().toString();
             String email = inputEmail.getText().toString();
-            String password = inputPassword.getText().toString();
-            String confirmPassword = inputConfirmPassword.getText().toString();
+            String password = inputPasswordLayout.getEditText().getText().toString();
+            String confirmPassword = inputConfirmPasswordLayout.getEditText().getText().toString();
 
             ValidateinputEmail(reg, name, email, password, confirmPassword);
         }
@@ -149,9 +152,7 @@ public class Signup extends AppCompatActivity {
                                                         Toast.makeText(Signup.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
                                                         loadingBar.dismiss();
 
-                                                        Intent intent = new Intent(Signup.this, Login.class);
-                                                        startActivity(intent);
-                                                        finish();
+                                                        new Includes().navigateTo(Signup.this, Login.class);
                                                     }
                                                     else {
                                                         loadingBar.dismiss();

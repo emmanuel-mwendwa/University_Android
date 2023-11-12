@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.university.Model.Users;
 import com.example.university.Prevalent.Prevalent;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,9 @@ import io.paperdb.Paper;
 
 public class Login extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail;
+
+    private TextInputLayout inputPasswordLayout;
     private Button loginButton;
     private ProgressDialog loadingBar;
 
@@ -40,7 +43,7 @@ public class Login extends AppCompatActivity {
 
         loginButton = (Button) findViewById(R.id.login_btn);
         inputEmail = (EditText) findViewById(R.id.login_email_input);
-        inputPassword = (EditText) findViewById(R.id.login_password_input);
+        inputPasswordLayout = (TextInputLayout) findViewById(R.id.login_password_input);
         loadingBar = new ProgressDialog(this);
 
         chxBoxRememberMe = (CheckBox) findViewById(R.id.remember_me);
@@ -59,7 +62,7 @@ public class Login extends AppCompatActivity {
     private void loginUser() {
 
         String email = inputEmail.getText().toString();
-        String password = inputPassword.getText().toString();
+        String password = inputPasswordLayout.getEditText().getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
@@ -102,16 +105,13 @@ public class Login extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 if (usersData.getIsLecturer() != null && usersData.getIsLecturer().equals("1")) {
-                                    Intent  intent = new Intent(Login.this, Lecturer.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(Login.this, Lecturer.class);
                                 }
                                 else if (usersData.getIsStudent() != null && usersData.getIsStudent().equals("1")) {
-                                    Intent  intent = new Intent(Login.this, Student.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(Login.this, Student.class);
                                 }
                                 else if (usersData.getIsAdmin() != null && usersData.getIsAdmin().equals("1")) {
-                                    Intent  intent = new Intent(Login.this, Admin.class);
-                                    startActivity(intent);
+                                    new Includes().navigateTo(Login.this, Admin.class);
                                 }
                             }
                             else {
