@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.University" parent="Base.Theme.University" />
+
+    <style name="Theme.University.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.University.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.University.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

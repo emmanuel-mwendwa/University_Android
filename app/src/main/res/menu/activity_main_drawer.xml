@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_course_registration"
+            android:icon="@drawable/baseline_library_books_24"
+            android:title="@string/menu_course_registration" />
+        <item
+            android:id="@+id/nav_results"
+            android:icon="@drawable/baseline_data_thresholding_24"
+            android:title="@string/menu_results" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/menu_settings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/baseline_logout_24"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>
