@@ -1,6 +1,9 @@
 package com.example.university;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.university.databinding.ActivityStudentBinding;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.paperdb.Paper;
 
 public class Student extends AppCompatActivity {
 
@@ -60,7 +64,39 @@ public class Student extends AppCompatActivity {
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
 
-        userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+        if (Prevalent.currentOnlineUser != null) {
+            userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+        }
+        else {
+            startActivity(new Intent(Student.this, Login.class));
+            finish();
+        }
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("MenuItemClicked", "MenuItem clicked: "+ item.getItemId());
+        int id = item.getItemId();
+
+
+        if (id == R.id.nav_logout) {
+            logout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        Log.d("Logout", "Logout method called");
+        Paper.book().destroy();
+
+        Intent intent = new Intent(Student.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
