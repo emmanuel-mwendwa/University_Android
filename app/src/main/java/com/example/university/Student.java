@@ -3,7 +3,9 @@ package com.example.university;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
+import com.example.university.Prevalent.Prevalent;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -15,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.university.databinding.ActivityStudentBinding;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Student extends AppCompatActivity {
 
@@ -51,6 +55,12 @@ public class Student extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_student);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View headerView = navigationView.getHeaderView(0);
+        CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
+        TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
+
+        userNameTextView.setText(Prevalent.currentOnlineUser.getName());
     }
 
     @Override

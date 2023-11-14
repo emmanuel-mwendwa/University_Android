@@ -102,6 +102,7 @@ public class Login extends AppCompatActivity {
                         if (usersData != null && usersData.getEmail().equals(email)) {
                             if (usersData.getPassword().equals(password)) {
                                 Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                                Prevalent.currentOnlineUser= usersData;
                                 loadingBar.dismiss();
 
                                 if (usersData.getIsLecturer() != null && usersData.getIsLecturer().equals("1")) {
