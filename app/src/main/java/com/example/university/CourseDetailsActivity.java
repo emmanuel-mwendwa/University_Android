@@ -14,7 +14,6 @@ import com.example.university.Model.Courses;
 import com.example.university.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView txtcourseName, txtcourseCode, txtcourseLecturer;
     private String courseId = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +38,67 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         courseId = getIntent().getStringExtra("pid");
 
-        registerCourse = (Button) findViewById(R.id.register_course_button);
-        txtcourseName = (TextView) findViewById(R.id.course_name_details);
-        txtcourseCode = (TextView) findViewById(R.id.course_code_details);
-        txtcourseLecturer = (TextView) findViewById(R.id.course_lecturer_details);
+        registerCourse = findViewById(R.id.register_course_button);
+        txtcourseName = findViewById(R.id.course_name_details);
+        txtcourseCode = findViewById(R.id.course_code_details);
+        txtcourseLecturer = findViewById(R.id.course_lecturer_details);
 
         getCourseDetails(courseId);
 
         registerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addingToRegisteredCoursesList();
+                checkCourseBeforeAdding();
             }
         });
+    }
+
+    private void checkCourseBeforeAdding() {
+        DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+
+        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getReg_no())
+                .child("Courses").child(courseId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.exists()) {
+                            // Course is not in the cart list
+                            checkCourseLimit();
+                        } else {
+                            // Course is already in the cart list
+                            Toast.makeText(CourseDetailsActivity.this, "Course is already in the cart", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle potential errors
+                    }
+                });
+    }
+
+    private void checkCourseLimit() {
+        DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+
+        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getReg_no())
+                .child("Courses")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildrenCount() < 5) {
+                            // The user has not reached the maximum limit (5 courses), proceed to add the course
+                            addingToRegisteredCoursesList();
+                        } else {
+                            // The user has already registered the maximum allowed number of courses
+                            Toast.makeText(CourseDetailsActivity.this, "Maximum limit of 5 courses reached", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle potential errors
+                    }
+                });
     }
 
     private void addingToRegisteredCoursesList() {
@@ -63,7 +109,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         saveCurrentDate = currentDate.format(calForDate.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        saveCurrentTime = currentDate.format(calForDate.getTime());
+        saveCurrentTime = currentTime.format(calForDate.getTime());
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
@@ -88,11 +134,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                          if (task.isSuccessful()) {
-                                              Toast.makeText(CourseDetailsActivity.this, "Added to Courses List", Toast.LENGTH_SHORT).show();
-
-                                              Includes includes = new Includes().navigateTo(CourseDetailsActivity.this, Student.class);
-                                          }
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(CourseDetailsActivity.this, "Added to Courses List", Toast.LENGTH_SHORT).show();
+                                                Includes includes = new Includes().navigateTo(CourseDetailsActivity.this, Student.class);
+                                            }
                                         }
                                     });
                         }
@@ -116,13 +161,14 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle potential errors
             }
         });
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Includes navigate = new Includes().navigateTo(CourseDetailsActivity.this, Student.class);
         finish();
     }
