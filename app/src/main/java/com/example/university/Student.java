@@ -3,23 +3,35 @@ package com.example.university;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.university.Model.Courses;
 import com.example.university.Prevalent.Prevalent;
+import com.example.university.ViewHolder.CourseViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.university.databinding.ActivityStudentBinding;
+import com.google.firebase.Firebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -28,6 +40,9 @@ public class Student extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityStudentBinding binding;
+    private DatabaseReference CoursesRef;
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +51,9 @@ public class Student extends AppCompatActivity {
 //        setContentView(R.layout.activity_student);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
+        Paper.init(this);
+        CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -64,6 +82,11 @@ public class Student extends AppCompatActivity {
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
 
+        recyclerView = findViewById(R.id.recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         if (Prevalent.currentOnlineUser != null) {
             userNameTextView.setText(Prevalent.currentOnlineUser.getName());
         }
@@ -72,19 +95,66 @@ public class Student extends AppCompatActivity {
             finish();
         }
 
+        NavigationView navigationView1 = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if( id == R.id.nav_logout) {
+                    logout();
+                    return true;
+                }
+                else if (id == R.id.nav_settings) {
+                    Intent intent = new Intent(Student.this, Settings.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerOptions<Courses> options =
+                new FirebaseRecyclerOptions.Builder<Courses>()
+                        .setQuery(CoursesRef, Courses.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<Courses, CourseViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Courses, CourseViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull CourseViewHolder holder, int position, @NonNull Courses model) {
+                        holder.txtCourseName.setText(model.getCourseName());
+                        holder.txtCourseCode.setText(model.getCourseCode());
+                        holder.txtLecturerEmail.setText(model.getLecturerEmail());
+//                        Picasso.get().load(model.getImage()).into(holder.imageView);
+                    }
+
+                    @NonNull
+                    @Override
+                    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.courses_items_layout, parent, false);
+                        CourseViewHolder holder = new CourseViewHolder(view);
+                        return holder;
+                    }
+                };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("MenuItemClicked", "MenuItem clicked: "+ item.getItemId());
-        int id = item.getItemId();
-
-
-        if (id == R.id.nav_logout) {
-            logout();
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
