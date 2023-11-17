@@ -218,4 +218,11 @@ public class Settings extends AppCompatActivity {
                 }
             });
         }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Includes navigate = new Includes().navigateTo(Settings.this, Student.class);
+        finish();
+    }
     }

@@ -21,11 +21,12 @@ public class Includes {
         return valid;
     }
 
-    public void navigateTo(Context context, Class<?> destination) {
+    public Includes navigateTo(Context context, Class<?> destination) {
         Intent intent = new Intent(context, destination);
         context.startActivity(intent);
         if (context instanceof Activity) {
             ((Activity) context).finish();
         }
+        return null;
     }
 }

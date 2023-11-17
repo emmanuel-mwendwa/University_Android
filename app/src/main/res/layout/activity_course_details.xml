@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".CourseDetailsActivity">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/profile"
         />
 
     <TextView
@@ -37,27 +39,26 @@
         android:gravity="center"
         android:layout_marginTop="10dp"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/course_description_details"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/course_code_details"-->
-<!--        android:text="Course Description"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="15dp"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_marginTop="10dp"/>-->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/register_course"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/course_lecturer_details"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:src="@drawable/baseline_add_24"
+        android:layout_below="@+id/course_code_details"
+        android:text="Course Lecturer"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/register_course_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_margin="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="15dp" />
+        android:text="Register Course"
+        android:textSize="18sp"/>
 
 </RelativeLayout>

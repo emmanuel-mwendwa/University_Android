@@ -137,6 +137,16 @@ public class Student extends AppCompatActivity {
                         holder.txtCourseCode.setText(model.getCourseCode());
                         holder.txtLecturerEmail.setText(model.getLecturerEmail());
 //                        Picasso.get().load(model.getImage()).into(holder.imageView);
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Student.this, CourseDetailsActivity.class);
+                                intent.putExtra("pid", model.getCourseId());
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
                     }
 
                     @NonNull
