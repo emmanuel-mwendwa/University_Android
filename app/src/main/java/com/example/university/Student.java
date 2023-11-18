@@ -62,8 +62,7 @@ public class Student extends AppCompatActivity {
         binding.appBarStudent.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Includes includes = new Includes().navigateTo(Student.this, CartActivity.class);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -107,6 +106,12 @@ public class Student extends AppCompatActivity {
                 }
                 else if (id == R.id.nav_settings) {
                     Intent intent = new Intent(Student.this, Settings.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                }
+                else if (id == R.id.nav_course_registration) {
+                    Intent intent = new Intent(Student.this, CartActivity.class);
                     startActivity(intent);
                     finish();
                     return true;
