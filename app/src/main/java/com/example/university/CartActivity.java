@@ -14,12 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.university.Model.Cart;
 import com.example.university.Prevalent.Prevalent;
 import com.example.university.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -44,6 +47,15 @@ public class CartActivity extends AppCompatActivity {
 
         NextProcessBtn = (Button) findViewById(R.id.next_process_btn);
         txtTotalCourses = (TextView) findViewById(R.id.total_courses);
+
+        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, ConfirmCourseRegistration.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -81,13 +93,29 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
-                                    Intent intent = new Intent(CartActivity.this, CourseDetailsActivity.class);
+
+                                    cartListRef.child("User View")
+                                            .child(Prevalent.currentOnlineUser.getReg_no())
+                                            .child("Courses")
+                                            .child(model.getCourseId())
+                                            .removeValue()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(CartActivity.this, "Course removed successfully.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+                                    Intent intent = new Intent(CartActivity.this, CartActivity.class);
                                     intent.putExtra("pid", model.getCourseId());
                                     startActivity(intent);
                                     finish();
                                 }
                             }
                         });
+                        builder.show();
                     }
                 });
             }

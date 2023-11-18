@@ -66,7 +66,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                             checkCourseLimit();
                         } else {
                             // Course is already in the cart list
-                            Toast.makeText(CourseDetailsActivity.this, "Course is already in the cart", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CourseDetailsActivity.this, "You have already registered this course", Toast.LENGTH_SHORT).show();
                         }
                     }
 
