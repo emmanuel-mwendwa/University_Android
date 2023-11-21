@@ -54,10 +54,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
     }
 
     private void checkCourseBeforeAdding() {
-        DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("Users").child(Prevalent.currentOnlineUser.getReg_no());
 
-        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getReg_no())
-                .child("Courses").child(courseId)
+        usersReference.child("registered_courses")
+                .child(courseId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -78,10 +78,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
     }
 
     private void checkCourseLimit() {
-        DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("Users");
 
-        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getReg_no())
-                .child("Courses")
+        usersReference.child(Prevalent.currentOnlineUser.getReg_no())
+                .child("registered_courses")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -111,7 +111,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        final DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("Users").child(Prevalent.currentOnlineUser.getReg_no());
+        DatabaseReference coursesReference = FirebaseDatabase.getInstance().getReference("Courses");
+
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("courseId", courseId);
@@ -121,15 +123,16 @@ public class CourseDetailsActivity extends AppCompatActivity {
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
 
-        cartListRef.child("User View").child(Prevalent.currentOnlineUser.getReg_no())
-                .child("Courses").child(courseId)
+        usersReference.child("registered_courses")
+                .child(courseId)
                 .updateChildren(cartMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            cartListRef.child("Admin View").child(Prevalent.currentOnlineUser.getReg_no())
-                                    .child("Courses").child(courseId)
+                            coursesReference.child(courseId)
+                                    .child("students")
+                                    .child(Prevalent.currentOnlineUser.getReg_no())
                                     .updateChildren(cartMap)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

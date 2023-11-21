@@ -1,8 +1,5 @@
 package com.example.university;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,78 +19,64 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.SimpleTimeZone;
 
 public class AddCourseActivity extends AppCompatActivity {
 
     private Button addNewCourseBtn;
     private EditText inputCourseName, inputCourseCode, inputLecturer;
-    boolean valid = true;
-    String courseName, courseCode, lecturer, saveCurrentDate, saveCurrentTime, courseRandomKey;
-
-    private DatabaseReference CoursesRef;
-
     private ProgressDialog loadingBar;
+
+    private DatabaseReference coursesRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
 
-        addNewCourseBtn = (Button) findViewById(R.id.addNewCourse);
-        inputCourseCode = (EditText) findViewById(R.id.course_code);
-        inputCourseName = (EditText) findViewById(R.id.course_name);
-        inputLecturer = (EditText) findViewById(R.id.lecturer_email);
+        addNewCourseBtn = findViewById(R.id.addNewCourse);
+        inputCourseCode = findViewById(R.id.course_code);
+        inputCourseName = findViewById(R.id.course_name);
+        inputLecturer = findViewById(R.id.lecturer_email);
 
         loadingBar = new ProgressDialog(this);
 
-        CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
+        coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 
         addNewCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ValidateCourseData();
+                updateLecturerAssignedCourse(inputLecturer.getText().toString(), coursesRef.getKey());
             }
         });
-
     }
 
-    private void ValidateCourseData() {
-        courseName = inputCourseName.getText().toString();
-        courseCode = inputCourseCode.getText().toString();
-        lecturer = inputLecturer.getText().toString();
+    private void validateCourseData() {
+        String courseName = inputCourseName.getText().toString();
+        String courseCode = inputCourseCode.getText().toString();
+        String lecturer = inputLecturer.getText().toString();
 
-        new Includes().checkField(inputCourseName);
-        new Includes().checkField(inputCourseCode);
-        new Includes().checkField(inputLecturer);
-
-        if (TextUtils.isEmpty(courseName)) {
-            Toast.makeText(this, "Enter Course Name", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(courseCode)) {
-            Toast.makeText(this, "Enter Course Code", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(lecturer)) {
-            Toast.makeText(this, "Enter Lecturer Email", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        if (TextUtils.isEmpty(courseName) || TextUtils.isEmpty(courseCode) || TextUtils.isEmpty(lecturer)) {
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        } else {
             loadingBar.setTitle("Add New Course");
             loadingBar.setMessage("Please wait, while we add the course.");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            StoreCourseInformation();
+            storeCourseInformation(courseName, courseCode, lecturer);
         }
     }
 
-    private void StoreCourseInformation() {
+    private void storeCourseInformation(String courseName, String courseCode, String lecturer) {
+        String saveCurrentDate, saveCurrentTime;
+        String courseRandomKey;
+
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
@@ -98,17 +84,19 @@ public class AddCourseActivity extends AppCompatActivity {
 
         courseRandomKey = saveCurrentDate + saveCurrentTime;
 
-        CoursesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query lecturerQuery = coursesRef.orderByChild("lecturerEmail").equalTo(lecturer);
+
+        lecturerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.child("courseId").exists()) {
+            public void onDataChange(@NonNull DataSnapshot lecturerSnapshot) {
+                if (!lecturerSnapshot.exists()) {
+                    Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 
-                    Query query = CoursesRef.orderByChild("courseCode").equalTo(courseCode);
-
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (!(snapshot.exists())) {
+                        public void onDataChange(@NonNull DataSnapshot courseSnapshot) {
+                            if (!courseSnapshot.exists()) {
+                                // Course Code is unique, and lecturer is not assigned to any course
                                 HashMap<String, Object> courseMap = new HashMap<>();
                                 courseMap.put("courseId", courseRandomKey);
                                 courseMap.put("date", saveCurrentDate);
@@ -117,11 +105,12 @@ public class AddCourseActivity extends AppCompatActivity {
                                 courseMap.put("courseCode", courseCode);
                                 courseMap.put("lecturerEmail", lecturer);
 
-                                CoursesRef.child(courseRandomKey).updateChildren(courseMap)
+                                coursesRef.child(courseRandomKey).updateChildren(courseMap)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+
                                                     Toast.makeText(AddCourseActivity.this, "Course added successfully!", Toast.LENGTH_SHORT).show();
                                                     loadingBar.dismiss();
 
@@ -140,10 +129,12 @@ public class AddCourseActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            // Handle potential errors
                         }
                     });
-
+                } else {
+                    Toast.makeText(AddCourseActivity.this, "Lecturer already assigned to a course", Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
                 }
             }
 
@@ -152,7 +143,34 @@ public class AddCourseActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
+
+    private void updateLecturerAssignedCourse(String lecturerEmail, String courseId) {
+        DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        Query query = lecturerRef.orderByChild("email").equalTo(lecturerEmail);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot lecturerSnapshot) {
+                if (lecturerSnapshot.exists()) {
+                    for (DataSnapshot lecturerData : lecturerSnapshot.getChildren()) {
+                        String currentAssignedCourse = lecturerData.child("assigned_course").getValue(String.class);
+                        if (!TextUtils.equals(currentAssignedCourse, courseId)) {
+                            lecturerData.getRef().child("assigned_course").setValue(courseId);
+
+                            validateCourseData();
+                        }
+                    }
+                } else {
+                    runOnUiThread(() -> Toast.makeText(AddCourseActivity.this, "This lecturer does not exist", Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled if needed
+            }
+        });
+    }
+
 }

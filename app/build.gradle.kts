@@ -52,7 +52,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.5")
     implementation("androidx.navigation:navigation-ui:2.7.5")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-//    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
     implementation("com.vanniktech:android-image-cropper:4.5.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

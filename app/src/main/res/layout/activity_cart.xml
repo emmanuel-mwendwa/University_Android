@@ -17,7 +17,7 @@
             android:id="@+id/total_courses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Courses"
+            android:text="Registered Courses"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textAlignment="center"
@@ -29,19 +29,9 @@
         android:id="@+id/course_cart_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relative_layout_1"
-        android:layout_above="@+id/next_process_btn">
+        android:layout_below="@+id/relative_layout_1">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/next_process_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        android:text="Confirm Registration"
-        android:textColor="@color/white"
-        android:textSize="20dp" />
 
 </RelativeLayout>

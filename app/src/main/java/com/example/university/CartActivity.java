@@ -45,30 +45,21 @@ public class CartActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        NextProcessBtn = (Button) findViewById(R.id.next_process_btn);
         txtTotalCourses = (TextView) findViewById(R.id.total_courses);
 
-        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, ConfirmCourseRegistration.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(Prevalent.currentOnlineUser.getReg_no())
+                .child("registered_courses");
 
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
-                        .setQuery(cartListRef.child("User View")
-                                .child(Prevalent.currentOnlineUser.getReg_no())
-                                .child("Courses"), Cart.class)
+                        .setQuery(cartListRef, Cart.class)
                                 .build();
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
@@ -94,10 +85,7 @@ public class CartActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
 
-                                    cartListRef.child("User View")
-                                            .child(Prevalent.currentOnlineUser.getReg_no())
-                                            .child("Courses")
-                                            .child(model.getCourseId())
+                                    cartListRef .child(model.getCourseId())
                                             .removeValue()
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
@@ -107,6 +95,20 @@ public class CartActivity extends AppCompatActivity {
                                                     }
                                                 }
                                             });
+
+                                    DatabaseReference coursesReference = FirebaseDatabase.getInstance().getReference("Courses");
+                                            coursesReference.child(model.getCourseId())
+                                                            .child("students")
+                                                            .child(Prevalent.currentOnlineUser.getReg_no())
+                                                            .removeValue()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        Toast.makeText(CartActivity.this, "Course removed successfully.", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
 
                                     Intent intent = new Intent(CartActivity.this, CartActivity.class);
                                     intent.putExtra("pid", model.getCourseId());
