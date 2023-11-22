@@ -123,6 +123,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
 
+        final HashMap<String, Object> studentMap = new HashMap<>();
+        studentMap.put("studentRegNo", Prevalent.currentOnlineUser.getReg_no());
+        studentMap.put("studentName", Prevalent.currentOnlineUser.getName());
+        studentMap.put("studentEmail", Prevalent.currentOnlineUser.getEmail());
+        studentMap.put("date", saveCurrentDate);
+        studentMap.put("time", saveCurrentTime);
+
         usersReference.child("registered_courses")
                 .child(courseId)
                 .updateChildren(cartMap)
@@ -133,7 +140,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                             coursesReference.child(courseId)
                                     .child("students")
                                     .child(Prevalent.currentOnlineUser.getReg_no())
-                                    .updateChildren(cartMap)
+                                    .updateChildren(studentMap)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

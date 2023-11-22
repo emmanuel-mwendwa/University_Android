@@ -49,7 +49,7 @@ public class AddCourseActivity extends AppCompatActivity {
         addNewCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateLecturerAssignedCourse(inputLecturer.getText().toString(), coursesRef.getKey());
+                updateLecturerAssignedCourse(inputLecturer.getText().toString(), inputCourseCode.getText().toString());
             }
         });
     }
@@ -145,7 +145,7 @@ public class AddCourseActivity extends AppCompatActivity {
         });
     }
 
-    private void updateLecturerAssignedCourse(String lecturerEmail, String courseId) {
+    private void updateLecturerAssignedCourse(String lecturerEmail, String leccourseId) {
         DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Users");
 
         Query query = lecturerRef.orderByChild("email").equalTo(lecturerEmail);
@@ -154,15 +154,16 @@ public class AddCourseActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot lecturerSnapshot) {
                 if (lecturerSnapshot.exists()) {
                     for (DataSnapshot lecturerData : lecturerSnapshot.getChildren()) {
-                        String currentAssignedCourse = lecturerData.child("assigned_course").getValue(String.class);
-                        if (!TextUtils.equals(currentAssignedCourse, courseId)) {
-                            lecturerData.getRef().child("assigned_course").setValue(courseId);
+                        String currentAssignedCourse = lecturerData.child("assignedCourse").getValue(String.class);
+                        if (!TextUtils.equals(currentAssignedCourse, leccourseId)) {
+                            lecturerData.getRef().child("assignedCourse").setValue(leccourseId);
 
                             validateCourseData();
                         }
                     }
                 } else {
-                    runOnUiThread(() -> Toast.makeText(AddCourseActivity.this, "This lecturer does not exist", Toast.LENGTH_SHORT).show());
+                    Toast.makeText(AddCourseActivity.this, "This lecturer does not exist", Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
                 }
             }
 

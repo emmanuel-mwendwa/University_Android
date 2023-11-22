@@ -2,13 +2,13 @@ package com.example.university.Model;
 
 public class Users {
 
-    private String email, name, password, reg_no, image, isLecturer, isStudent, isAdmin;
+    private String email, name, password, reg_no, image, isLecturer, isStudent, isAdmin, assignedCourse;
 
     public Users() {
 
     }
 
-    public Users(String email, String name, String password, String reg_no, String image, String isLecturer, String isStudent, String isAdmin) {
+    public Users(String email, String name, String password, String reg_no, String image, String isLecturer, String isStudent, String isAdmin, String assignedCourse) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -17,6 +17,7 @@ public class Users {
         this.isLecturer = isLecturer;
         this.isStudent = isStudent;
         this.isAdmin = isAdmin;
+        this.assignedCourse = assignedCourse;
     }
 
     public String getEmail() {
@@ -81,5 +82,13 @@ public class Users {
 
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public String getAssignedCourse() {
+        return assignedCourse;
+    }
+
+    public void setAssignedCourse(String assignedCourse) {
+        this.assignedCourse = assignedCourse;
     }
 }

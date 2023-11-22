@@ -7,11 +7,72 @@
     tools:context=".Lecturer">
 
     <TextView
+        android:id="@+id/lecturer_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Lecturer Dashboard"
+        android:gravity="center"
         android:textSize="18sp"
         android:layout_marginTop="50dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lecturer_dashboard"
+        android:elevation="15dp"
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/lecturer_course_layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/lecturer_course_layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lecturer_course_layout_image"
+            android:text="Course Name"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/lecturer_course_layout_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lecturer_course_layout_name"
+            android:text="Course Code"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/lecturer_course_layout_lecturer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lecturer_course_layout_code"
+            android:text="Lecturer Email"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="10dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/lecturerLogoutButton"
