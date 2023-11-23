@@ -11,14 +11,14 @@ import com.example.university.R;
 
 public class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView studentName, studentRegNo, studentMarksStatus;
+    public TextView txtStudentName, txtStudentRegNo, txtStudentMarksStatus;
     public ItemClickListener listener;
     public StudentViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        studentName = (TextView) itemView.findViewById(R.id.student_name);
-        studentRegNo = (TextView) itemView.findViewById(R.id.student_reg_no);
-        studentMarksStatus = (TextView) itemView.findViewById(R.id.student_marks);
+        txtStudentName = (TextView) itemView.findViewById(R.id.student_name);
+        txtStudentRegNo = (TextView) itemView.findViewById(R.id.student_reg_no);
+        txtStudentMarksStatus = (TextView) itemView.findViewById(R.id.student_marks);
     }
 
     public void setItemClickListener(ItemClickListener listener) {
