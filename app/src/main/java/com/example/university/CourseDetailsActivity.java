@@ -129,6 +129,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         studentMap.put("studentEmail", Prevalent.currentOnlineUser.getEmail());
         studentMap.put("date", saveCurrentDate);
         studentMap.put("time", saveCurrentTime);
+        studentMap.put("studentMarksStatus", "pending");
 
         usersReference.child("registered_courses")
                 .child(courseId)
@@ -145,7 +146,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(CourseDetailsActivity.this, "Added to Courses List", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(CourseDetailsActivity.this, "Course Registered Successfully.", Toast.LENGTH_SHORT).show();
                                                 Includes includes = new Includes().navigateTo(CourseDetailsActivity.this, Student.class);
                                             }
                                         }

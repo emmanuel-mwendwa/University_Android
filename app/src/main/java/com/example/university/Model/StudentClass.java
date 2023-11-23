@@ -6,10 +6,12 @@ public class StudentClass {
 
     private double assignment1, assignment2, cat1, cat2, finalExam;
 
+    private String overallGrade, gradeStatus;
+
     public StudentClass() {
     }
 
-    public StudentClass(String studentName, String studentRegNo, double assignment1, double assignment2, double cat1, double cat2, double finalExam) {
+    public StudentClass(String studentName, String studentRegNo, String studentMarksStatus, double assignment1, double assignment2, double cat1, double cat2, double finalExam) {
         this.studentName = studentName;
         this.studentRegNo = studentRegNo;
         this.assignment1 = assignment1;
@@ -17,6 +19,54 @@ public class StudentClass {
         this.cat1 = cat1;
         this.cat2 = cat2;
         this.finalExam = finalExam;
+        this.overallGrade = calculateOverallGrade();
+        this.gradeStatus = calculateGradeStatus();
+    }
+
+    private String calculateOverallGrade() {
+
+        double totalMarks = (assignment1 + assignment2 + cat1 + cat2 + finalExam);
+
+        if (totalMarks >= 70) {
+            return "A";
+        }
+        else if (totalMarks >= 60) {
+            return "B";
+        }
+        else if (totalMarks >= 50) {
+            return "C";
+        }
+        else if (totalMarks >= 40) {
+            return "D";
+        }
+        else {
+            return "F";
+        }
+    }
+
+    public String getOverallGrade() {
+        return overallGrade;
+    }
+
+    public void setOverallGrade(String overallGrade) {
+        this.overallGrade = overallGrade;
+    }
+
+    public String getGradeStatus() {
+        return gradeStatus;
+    }
+
+    public void setGradeStatus(String gradeStatus) {
+        this.gradeStatus = gradeStatus;
+    }
+
+    private String calculateGradeStatus() {
+        if (overallGrade.equals("F")) {
+            return "Fail";
+        }
+        else {
+            return "Pass";
+        }
     }
 
     public String getStudentName() {

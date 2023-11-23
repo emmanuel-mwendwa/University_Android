@@ -2,12 +2,13 @@ package com.example.university.Model;
 
 public class RegisteredStudents {
 
-    private String studentEmail, studentName, studentRegNo;
+    private String studentEmail, studentName, studentRegNo, studentMarksStatus;
 
-    public RegisteredStudents(String studentEmail, String studentName, String studentRegNo) {
+    public RegisteredStudents(String studentEmail, String studentName, String studentRegNo, String studentMarksStatus) {
         this.studentEmail = studentEmail;
         this.studentName = studentName;
         this.studentRegNo = studentRegNo;
+        this.studentMarksStatus = studentMarksStatus;
     }
 
     public RegisteredStudents() {
@@ -35,5 +36,13 @@ public class RegisteredStudents {
 
     public void setStudentRegNo(String studentRegNo) {
         this.studentRegNo = studentRegNo;
+    }
+
+    public String getStudentMarksStatus() {
+        return studentMarksStatus;
+    }
+
+    public void setStudentMarksStatus(String studentMarksStatus) {
+        this.studentMarksStatus = studentMarksStatus;
     }
 }
