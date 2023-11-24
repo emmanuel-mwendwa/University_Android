@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".AdminEditMarksAcitivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextStudentName"
+        android:text="Student Name" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextStudentRegNo"
+        android:layout_below="@+id/editTextStudentName"
+        android:text="Student Reg No" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextAssignment1"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextStudentRegNo"
+        android:hint="Assignment 1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextAssignment2"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextAssignment1"
+        android:hint="Assignment 2" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextCat1"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextAssignment2"
+        android:hint="Cat 1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextCat2"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextCat1"
+        android:hint="Cat 2" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextExamMarks"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextCat2"
+        android:hint="Exam" />
+
+    <Button
+        android:id="@+id/btnAddMarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextExamMarks"
+        android:layout_marginTop="16dp"
+        android:text="Add Marks" />
+</RelativeLayout>

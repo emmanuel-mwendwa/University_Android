@@ -14,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.university.Model.Courses;
 import com.example.university.Model.RegisteredStudents;
-import com.example.university.Model.Users;
 import com.example.university.ViewHolder.StudentViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -27,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class StudentCourse extends AppCompatActivity {
+public class AdminStudentCourse extends AppCompatActivity {
 
     private DatabaseReference coursesRef;
     private RecyclerView recyclerView;
@@ -38,9 +36,9 @@ public class StudentCourse extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_course);
+        setContentView(R.layout.activity_admin_student_course);
 
-        txtCourseCode = (TextView) findViewById(R.id.recycler_course_name);
+        txtCourseCode = (TextView) findViewById(R.id.admin_recycler_course_name);
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
@@ -50,11 +48,10 @@ public class StudentCourse extends AppCompatActivity {
 
         coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
 
-        recyclerView = (RecyclerView) findViewById(R.id.student_recycler_menu);
+        recyclerView = (RecyclerView) findViewById(R.id.admin_student_recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
     }
 
     @Override
@@ -108,17 +105,12 @@ public class StudentCourse extends AppCompatActivity {
                                                                 .child(model.getStudentRegNo())
                                                                 .child("studentMarksStatus");
 
-                                                        if (studentMarksStatus.exists() && "available".equals(studentMarksStatus.getValue(String.class))) {
-                                                            Toast.makeText(StudentCourse.this, "Marks are already available for this student!", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                        else {
-                                                            Intent intent1 = new Intent(getApplicationContext(), AddMarksActivity.class);
+                                                            Intent intent1 = new Intent(getApplicationContext(), AdminEditMarksAcitivity.class);
                                                             intent1.putExtra("courseCode", String.valueOf(courseCode));
                                                             intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
                                                             intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));
                                                             startActivity(intent1);
                                                             finish();
-                                                        }
                                                     }
                                                 }
 
@@ -147,9 +139,9 @@ public class StudentCourse extends AppCompatActivity {
                     adapter.startListening();
                 }
                 else {
-                    Toast.makeText(StudentCourse.this, "There are no registered students in this course", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminStudentCourse.this, "There are no registered students in this course", Toast.LENGTH_SHORT).show();
                 }
-                }
+            }
 
 
             @Override
@@ -162,7 +154,7 @@ public class StudentCourse extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Includes navigate = new Includes().navigateTo(StudentCourse.this, Lecturer.class);
+        Includes navigate = new Includes().navigateTo(AdminStudentCourse.this, AdminCourseDetailsActivity.class);
         finish();
     }
 }

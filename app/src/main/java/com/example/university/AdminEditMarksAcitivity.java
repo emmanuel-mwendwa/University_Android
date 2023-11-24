@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.university.Model.StudentClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddMarksActivity extends AppCompatActivity {
+public class AdminEditMarksAcitivity extends AppCompatActivity {
 
     TextView txtStudentName, txtStudentRegNo;
     EditText txtAssignment1, txtAssignment2, txtCat1, txtCat2, txtExam;
@@ -33,7 +32,7 @@ public class AddMarksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_marks);
+        setContentView(R.layout.activity_admin_edit_marks_acitivity);
 
         Intent intent = getIntent();
 
@@ -62,6 +61,7 @@ public class AddMarksActivity extends AppCompatActivity {
                 addStudentMarks();
             }
         });
+
     }
 
     private void addStudentMarks() {
@@ -121,8 +121,8 @@ public class AddMarksActivity extends AppCompatActivity {
                     studentMarksStatusSnapshot.getRef().updateChildren(updateMarksStatus);
 
                     // Start the StudentCourse activity
-                    Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(AddMarksActivity.this, StudentCourse.class);
+                    Toast.makeText(AdminEditMarksAcitivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(AdminEditMarksAcitivity.this, AdminStudentCourse.class);
                     intent1.putExtra("courseCode", String.valueOf(courseCode));
                     startActivity(intent1);
                     finish();

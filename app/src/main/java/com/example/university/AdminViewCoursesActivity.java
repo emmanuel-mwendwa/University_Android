@@ -40,8 +40,6 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
 
         CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 
-        addMarksButton = (Button) findViewById(R.id.register_course_button) ;
-
         recyclerView = findViewById(R.id.recycler_admin_view_courses);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

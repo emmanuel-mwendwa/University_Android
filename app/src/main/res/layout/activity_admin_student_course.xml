@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminStudentCourse">
+
+    <TextView
+        android:id="@+id/admin_recycler_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Course Name"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/admin_student_recycler_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/recycler_course_name"
+        android:layout_marginBottom="20dp"
+        android:layout_margin="15dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

@@ -41,7 +41,7 @@ public class AdminCourseDetailsActivity extends AppCompatActivity {
         registerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminCourseDetailsActivity.this, StudentCourse.class);
+                Intent intent = new Intent(AdminCourseDetailsActivity.this, AdminStudentCourse.class);
                 intent.putExtra("courseCode", String.valueOf(txtcourseCode.getText()));
                 startActivity(intent);
                 finish();
