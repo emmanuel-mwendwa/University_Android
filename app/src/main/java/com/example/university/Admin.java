@@ -31,6 +31,13 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+        editMarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Includes().navigateTo(Admin.this, StudentCourse.class);
+            }
+        });
+
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
