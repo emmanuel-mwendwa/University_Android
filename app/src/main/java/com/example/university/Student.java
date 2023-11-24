@@ -120,10 +120,7 @@ public class Student extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
-
 
     @Override
     protected void onStart() {

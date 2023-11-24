@@ -83,8 +83,6 @@ public class AddMarksActivity extends AppCompatActivity {
         // Assign grade status
         String gradeStatus = calculateGradeStatus(overallGrade);
 
-//        StudentClass student = new StudentClass(studentName, studentRegNo, assignment1, assignment2, cat1, cat2, finalExam);
-
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
 
@@ -96,8 +94,13 @@ public class AddMarksActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+
                     DataSnapshot courseSnapshot = snapshot.getChildren().iterator().next();
-                    DataSnapshot studentsSnapshot  = courseSnapshot.child("students").child(studentRegNo).child("grades");
+                    DataSnapshot studentsSnapshot  = courseSnapshot.child("students").child(studentRegNo);
+
+                    // Marks are not available. Continue with adding the marks.
+
+                    DataSnapshot gradesSnapshot = studentsSnapshot.child("grades");
 
                     // Create a HashMap to store the updated values
                     Map<String, Object> updateValues = new HashMap<>();
@@ -109,9 +112,21 @@ public class AddMarksActivity extends AppCompatActivity {
                     updateValues.put("overallGrade", overallGrade);
                     updateValues.put("gradeStatus", gradeStatus);
 
-                    studentsSnapshot.getRef().updateChildren(updateValues);
+                    gradesSnapshot.getRef().updateChildren(updateValues);
 
+                    // Update studentMarksStatus
+                    DataSnapshot studentMarksStatusSnapshot = courseSnapshot.child("students").child(studentRegNo);
+                    Map<String, Object> updateMarksStatus = new HashMap<>();
+                    updateMarksStatus.put("studentMarksStatus", "available");
+                    studentMarksStatusSnapshot.getRef().updateChildren(updateMarksStatus);
+
+                    // Start the StudentCourse activity
                     Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(AddMarksActivity.this, StudentCourse.class);
+                    intent1.putExtra("courseCode", String.valueOf(courseCode));
+                    startActivity(intent1);
+                    finish();
+
                 }
             }
 
@@ -148,6 +163,5 @@ public class AddMarksActivity extends AppCompatActivity {
             return "Pass";
         }
     }
-
 
 }

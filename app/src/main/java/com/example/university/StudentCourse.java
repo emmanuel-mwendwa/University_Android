@@ -95,12 +95,38 @@ public class StudentCourse extends AppCompatActivity {
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent1 = new Intent(getApplicationContext(), AddMarksActivity.class);
-                                            intent1.putExtra("courseCode", String.valueOf(courseCode));
-                                            intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
-                                            intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));
-                                            startActivity(intent1);
-                                            finish();
+
+                                            DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+                                            Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
+
+                                            courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    if (snapshot.exists()) {
+                                                        DataSnapshot coursesSnapshot = snapshot.getChildren().iterator().next();
+                                                        DataSnapshot studentMarksStatus = coursesSnapshot.child("students")
+                                                                .child(model.getStudentRegNo())
+                                                                .child("studentMarksStatus");
+
+                                                        if (studentMarksStatus.exists() && "available".equals(studentMarksStatus.getValue(String.class))) {
+                                                            Toast.makeText(StudentCourse.this, "Marks are already available for this student!", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                        else {
+                                                            Intent intent1 = new Intent(getApplicationContext(), AddMarksActivity.class);
+                                                            intent1.putExtra("courseCode", String.valueOf(courseCode));
+                                                            intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
+                                                            intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));
+                                                            startActivity(intent1);
+                                                            finish();
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                         }
                                     });
 
