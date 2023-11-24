@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,14 +66,15 @@ public class AdminEditMarksAcitivity extends AppCompatActivity {
     }
 
     private void addStudentMarks() {
+
         // Retrieve values from EditText fields
         String studentName = txtStudentName.getText().toString();
         String studentRegNo = txtStudentRegNo.getText().toString();
-        double assignment1 = Double.parseDouble(txtAssignment1.getText().toString());
-        double assignment2 = Double.parseDouble(txtAssignment2.getText().toString());
-        double cat1 = Double.parseDouble(txtCat1.getText().toString());
-        double cat2 = Double.parseDouble(txtCat2.getText().toString());
-        double finalExam = Double.parseDouble(txtExam.getText().toString());
+        double assignment1 = parseDoubleFromEditText(txtAssignment1);
+        double assignment2 = parseDoubleFromEditText(txtAssignment2);
+        double cat1 = parseDoubleFromEditText(txtCat1);
+        double cat2 = parseDoubleFromEditText(txtCat2);
+        double finalExam = parseDoubleFromEditText(txtExam);
 
         // Calculate totalMarks
         double totalMarks = (assignment1 + assignment2 + cat1 + cat2 + finalExam);
@@ -161,6 +163,33 @@ public class AdminEditMarksAcitivity extends AppCompatActivity {
         }
         else {
             return "Pass";
+        }
+    }
+
+    private boolean isEditTextEmpty(EditText editText) {
+        String text = editText.getText().toString().trim();
+        if (text.isEmpty()) {
+            editText.setError("This field is required");
+            return true;
+        }
+        return false;
+    }
+
+    private double parseDoubleFromEditText(EditText editText) {
+        if (isEditTextEmpty(editText)) {
+            return 0.0; // or any other default value, or you can choose to return a special value
+        }
+
+        String text = editText.getText().toString().trim();
+
+        try {
+            // Parse the double value from the EditText
+            return Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            // Show a Toast message or highlight the error in the EditText
+            Toast.makeText(this, "Invalid number format", Toast.LENGTH_SHORT).show();
+            editText.setError("Invalid number format");
+            return 0.0; // or any other default value, or you can choose to return a special value
         }
     }
 }

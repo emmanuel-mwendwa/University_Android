@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,6 @@ public class AddMarksActivity extends AppCompatActivity {
     TextView txtStudentName, txtStudentRegNo;
     EditText txtAssignment1, txtAssignment2, txtCat1, txtCat2, txtExam;
     Button addMarksButton;
-
     DatabaseReference studentsRef;
 
     @Override
@@ -65,14 +65,15 @@ public class AddMarksActivity extends AppCompatActivity {
     }
 
     private void addStudentMarks() {
+
         // Retrieve values from EditText fields
         String studentName = txtStudentName.getText().toString();
         String studentRegNo = txtStudentRegNo.getText().toString();
-        double assignment1 = Double.parseDouble(txtAssignment1.getText().toString());
-        double assignment2 = Double.parseDouble(txtAssignment2.getText().toString());
-        double cat1 = Double.parseDouble(txtCat1.getText().toString());
-        double cat2 = Double.parseDouble(txtCat2.getText().toString());
-        double finalExam = Double.parseDouble(txtExam.getText().toString());
+        double assignment1 = parseDoubleFromEditText(txtAssignment1);
+        double assignment2 = parseDoubleFromEditText(txtAssignment2);
+        double cat1 = parseDoubleFromEditText(txtCat1);
+        double cat2 = parseDoubleFromEditText(txtCat2);
+        double finalExam = parseDoubleFromEditText(txtExam);
 
         // Calculate totalMarks
         double totalMarks = (assignment1 + assignment2 + cat1 + cat2 + finalExam);
@@ -96,7 +97,7 @@ public class AddMarksActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
 
                     DataSnapshot courseSnapshot = snapshot.getChildren().iterator().next();
-                    DataSnapshot studentsSnapshot  = courseSnapshot.child("students").child(studentRegNo);
+                    DataSnapshot studentsSnapshot = courseSnapshot.child("students").child(studentRegNo);
 
                     // Marks are not available. Continue with adding the marks.
 
@@ -140,17 +141,13 @@ public class AddMarksActivity extends AppCompatActivity {
     private String calculateOverallGrade(double totalMarks) {
         if (totalMarks >= 70) {
             return "A";
-        }
-        else if (totalMarks >= 60) {
+        } else if (totalMarks >= 60) {
             return "B";
-        }
-        else if (totalMarks >= 50) {
+        } else if (totalMarks >= 50) {
             return "C";
-        }
-        else if (totalMarks >= 40) {
+        } else if (totalMarks >= 40) {
             return "D";
-        }
-        else {
+        } else {
             return "F";
         }
     }
@@ -158,9 +155,35 @@ public class AddMarksActivity extends AppCompatActivity {
     private String calculateGradeStatus(String overallGrade) {
         if (overallGrade.equals("F")) {
             return "Fail";
-        }
-        else {
+        } else {
             return "Pass";
+        }
+    }
+
+    private boolean isEditTextEmpty(EditText editText) {
+        String text = editText.getText().toString().trim();
+        if (text.isEmpty()) {
+            editText.setError("This field is required");
+            return true;
+        }
+        return false;
+    }
+
+    private double parseDoubleFromEditText(EditText editText) {
+        if (isEditTextEmpty(editText)) {
+            return 0.0; // or any other default value, or you can choose to return a special value
+        }
+
+        String text = editText.getText().toString().trim();
+
+        try {
+            // Parse the double value from the EditText
+            return Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            // Show a Toast message or highlight the error in the EditText
+            Toast.makeText(this, "Invalid number format", Toast.LENGTH_SHORT).show();
+            editText.setError("Invalid number format");
+            return 0.0; // or any other default value, or you can choose to return a special value
         }
     }
 }
