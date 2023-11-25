@@ -88,4 +88,11 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Includes navigate = new Includes().navigateTo(AdminViewCoursesActivity.this, Admin.class);
+        finish();
+    }
 }

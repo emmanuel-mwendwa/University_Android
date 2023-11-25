@@ -38,6 +38,13 @@ public class Admin extends AppCompatActivity {
             }
         });
 
+        generateReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Includes().navigateTo(Admin.this, ReportTypeActivity.class);
+            }
+        });
+
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
