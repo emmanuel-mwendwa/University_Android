@@ -46,8 +46,6 @@ public class StudentCourse extends AppCompatActivity {
         String courseCode = intent.getStringExtra("courseCode");
         Log.d("CourseCode", String.valueOf(courseCode));
 
-        txtCourseCode.setText(courseCode);
-
         coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
 
         recyclerView = (RecyclerView) findViewById(R.id.student_recycler_menu);
@@ -67,6 +65,7 @@ public class StudentCourse extends AppCompatActivity {
         Log.d("CourseCode", String.valueOf(courseCode));
 
         Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
+
         courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -88,9 +87,9 @@ public class StudentCourse extends AppCompatActivity {
                                 protected void onBindViewHolder(@NonNull StudentViewHolder holder, int position, @NonNull RegisteredStudents model) {
 
 
-                                    holder.txtStudentName.setText("Student Name: " + model.getStudentName());
-                                    holder.txtStudentRegNo.setText("Student Reg No: " + model.getStudentRegNo());
-                                    holder.txtStudentMarksStatus.setText("Student Marks Status: " + model.getStudentMarksStatus());
+                                    holder.txtStudentName.setText("Name: " + model.getStudentName());
+                                    holder.txtStudentRegNo.setText("Reg No: " + model.getStudentRegNo());
+                                    holder.txtStudentMarksStatus.setText("Marks Status: " + model.getStudentMarksStatus());
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override

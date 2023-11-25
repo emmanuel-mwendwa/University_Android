@@ -2,15 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="36dp"
+    android:gravity="center"
     tools:context=".AddMarksActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/profile"
+        android:layout_centerHorizontal="true"
+        app:civ_border_width="2dp"
+        android:layout_marginBottom="12dp"
+        app:civ_border_color="#FF000000"/>
+
     <TextView
+        android:layout_below="@+id/user_profile_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextStudentName"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_marginBottom=" 8dp"
         android:text="Student Name" />
 
     <TextView
@@ -18,6 +38,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextStudentRegNo"
         android:layout_below="@+id/editTextStudentName"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_marginBottom=" 8dp"
         android:text="Student Reg No" />
 
     <EditText
@@ -25,7 +51,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextAssignment1"
         android:inputType="numberDecimal"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/editTextStudentRegNo"
+        android:gravity="center"
         android:hint="Assignment 1" />
 
     <EditText
@@ -33,7 +64,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextAssignment2"
         android:inputType="numberDecimal"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/editTextAssignment1"
+        android:gravity="center"
         android:hint="Assignment 2" />
 
     <EditText
@@ -41,7 +77,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextCat1"
         android:inputType="numberDecimal"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/editTextAssignment2"
+        android:gravity="center"
         android:hint="Cat 1" />
 
     <EditText
@@ -49,7 +90,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextCat2"
         android:inputType="numberDecimal"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/editTextCat1"
+        android:gravity="center"
         android:hint="Cat 2" />
 
     <EditText
@@ -57,7 +103,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextExamMarks"
         android:inputType="numberDecimal"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/editTextCat2"
+        android:gravity="center"
         android:hint="Exam" />
 
     <Button
@@ -66,6 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextExamMarks"
         android:layout_marginTop="16dp"
-        android:text="Add Marks" />
+        android:backgroundTint="#171717"
+        android:text="Add Marks"
+        app:cornerRadius="3dp"/>
 
 </RelativeLayout>

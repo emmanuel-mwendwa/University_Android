@@ -186,4 +186,11 @@ public class AddMarksActivity extends AppCompatActivity {
             return 0.0; // or any other default value, or you can choose to return a special value
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Includes navigate = new Includes().navigateTo(AddMarksActivity.this, Lecturer.class);
+        finish();
+    }
 }

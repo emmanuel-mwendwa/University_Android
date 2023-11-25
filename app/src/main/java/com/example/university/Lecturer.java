@@ -26,7 +26,7 @@ import io.paperdb.Paper;
 public class Lecturer extends AppCompatActivity {
 
     private Button LogoutBtn;
-    private TextView txtCourseName, txtCourseCode, txtLecturerEmail;
+    private TextView txtCourseName, txtCourseCode, txtLecturerEmail, txtLecturerDashboard;
 
     private RelativeLayout relativeLayout;
 
@@ -36,6 +36,7 @@ public class Lecturer extends AppCompatActivity {
         setContentView(R.layout.activity_lecturer);
 
         LogoutBtn = (Button) findViewById(R.id.lecturerLogoutButton);
+        txtLecturerDashboard = (TextView) findViewById(R.id.lecturer_dashboard);
         txtCourseName = (TextView) findViewById(R.id.lecturer_course_layout_name);
         txtCourseCode = (TextView) findViewById(R.id.lecturer_course_layout_code);
         txtLecturerEmail = (TextView) findViewById(R.id.lecturer_course_layout_lecturer);
@@ -71,6 +72,7 @@ public class Lecturer extends AppCompatActivity {
 
                                 final String sendCourseCode = String.valueOf(course.getCourseCode());
 
+                                txtLecturerDashboard.setText("");
                                 txtCourseName.setText(course.getCourseName());
                                 txtCourseCode.setText(course.getCourseCode());
                                 txtLecturerEmail.setText(course.getLecturerEmail());

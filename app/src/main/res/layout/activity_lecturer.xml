@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Lecturer">
 
     <TextView
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/course_pics"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -75,17 +77,19 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/lecturerLogoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
-        android:text="Log Out"
-        android:textSize="20sp"
-        android:fontFamily="@font/rancho"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"/>
 
+        <Button
+            android:id="@+id/lecturerLogoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:text="Log Out"
+            android:textSize="20sp"
+            android:fontFamily="@font/rancho"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="@color/black"
+            app:cornerRadius="3dp"/>
 
 </RelativeLayout>
