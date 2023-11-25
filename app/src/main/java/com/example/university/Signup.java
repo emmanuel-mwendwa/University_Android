@@ -205,4 +205,11 @@ public class Signup extends AppCompatActivity {
 
         return valid;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Includes navigate = new Includes().navigateTo(Signup.this, MainActivity.class);
+        finish();
+    }
 }

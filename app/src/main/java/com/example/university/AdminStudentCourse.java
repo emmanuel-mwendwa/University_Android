@@ -105,7 +105,7 @@ public class AdminStudentCourse extends AppCompatActivity {
                                                                 .child(model.getStudentRegNo())
                                                                 .child("studentMarksStatus");
 
-                                                            Intent intent1 = new Intent(getApplicationContext(), AdminEditMarksAcitivity.class);
+                                                            Intent intent1 = new Intent(getApplicationContext(), AdminEditMarksActivity.class);
                                                             intent1.putExtra("courseCode", String.valueOf(courseCode));
                                                             intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
                                                             intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));

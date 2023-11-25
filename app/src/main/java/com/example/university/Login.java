@@ -133,4 +133,11 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Includes navigate = new Includes().navigateTo(Login.this, MainActivity.class);
+        finish();
+    }
 }

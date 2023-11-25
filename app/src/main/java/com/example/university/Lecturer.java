@@ -105,11 +105,5 @@ public class Lecturer extends AppCompatActivity {
 
             }
         });
-
-
     }
-
-
-
-
 }

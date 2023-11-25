@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminEditMarksAcitivity extends AppCompatActivity {
+public class AdminEditMarksActivity extends AppCompatActivity {
 
     TextView txtStudentName, txtStudentRegNo;
     EditText txtAssignment1, txtAssignment2, txtCat1, txtCat2, txtExam;
@@ -123,8 +122,8 @@ public class AdminEditMarksAcitivity extends AppCompatActivity {
                     studentMarksStatusSnapshot.getRef().updateChildren(updateMarksStatus);
 
                     // Start the StudentCourse activity
-                    Toast.makeText(AdminEditMarksAcitivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(AdminEditMarksAcitivity.this, AdminStudentCourse.class);
+                    Toast.makeText(AdminEditMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(AdminEditMarksActivity.this, AdminStudentCourse.class);
                     intent1.putExtra("courseCode", String.valueOf(courseCode));
                     startActivity(intent1);
                     finish();
