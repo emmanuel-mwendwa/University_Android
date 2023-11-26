@@ -6,86 +6,96 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
+    android:padding="0dp"
     android:gravity="center"
+    android:layout_gravity="center"
     tools:context=".ReportTypeActivity">
 
-    <Button
-        android:id="@+id/report_type_all"
-        android:layout_width="match_parent"
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:backgroundTint="#041030"
-        android:text="All"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        app:cornerRadius="3dp"/>
+        android:layout_gravity="center"
+        android:columnCount="2"
+        android:rowCount="1">
+        <Button
+            android:id="@+id/report_type_all"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:backgroundTint="#041030"
+            android:text="All"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cornerRadius="3dp"/>
 
-    <Button
-        android:id="@+id/report_type_pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:backgroundTint="#041030"
-        android:text="Pass"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        app:cornerRadius="3dp"/>
+        <Button
+            android:id="@+id/report_type_pass"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="#041030"
+            android:text="Pass"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:cornerRadius="3dp" />
 
-    <Button
-        android:id="@+id/report_type_fail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:backgroundTint="#041030"
-        android:text="Fail"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        app:cornerRadius="3dp"/>
+        <Button
+            android:id="@+id/report_type_fail"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:backgroundTint="#041030"
+            android:text="Fail"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cornerRadius="3dp"/>
 
-    <Button
-        android:id="@+id/report_type_special"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:backgroundTint="#041030"
-        android:text="Special"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        app:cornerRadius="3dp"/>
+        <Button
+            android:id="@+id/report_type_special"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:backgroundTint="#041030"
+            android:text="Special"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cornerRadius="3dp"/>
 
-    <Button
-        android:id="@+id/report_type_supplementary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="#041030"
-        android:text="Supplementary"
-        app:cornerRadius="3dp"/>
+        <Button
+            android:id="@+id/report_type_supplementary"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="#041030"
+            android:text="Supplementary"
+            app:cornerRadius="3dp"/>
 
-    <Button
-        android:id="@+id/report_type_pending"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:backgroundTint="#041030"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:text="Pending"
-        app:cornerRadius="3dp"/>
+        <Button
+            android:id="@+id/report_type_pending"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:backgroundTint="#041030"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Pending"
+            app:cornerRadius="3dp"/>
+
+    </GridLayout>
+
 
 </LinearLayout>

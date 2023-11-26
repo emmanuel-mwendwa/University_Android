@@ -24,6 +24,13 @@ public class Admin extends AppCompatActivity {
         generateReport = (Button) findViewById(R.id.generateReportsActivity);
         editMarks = (Button) findViewById(R.id.editMarksActivity);
 
+        addAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Includes().navigateTo(Admin.this, Signup.class);
+            }
+        });
+
         addCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
