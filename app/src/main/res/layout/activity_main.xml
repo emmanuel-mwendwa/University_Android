@@ -5,21 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
+    android:background="@drawable/ty"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="70dp"
+    android:padding="10dp"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to"
-        android:textColor="@color/white"
-        android:fontFamily="@font/rancho"
-        android:textSize="30dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/alata"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp"/>
+        android:text="Welcome"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
 
     <ImageView
         android:id="@+id/app_logo"
@@ -34,42 +34,45 @@
         android:id="@+id/app_slogan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rancho"
+        android:fontFamily="@font/alata"
         android:text="Better Life through Technology"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/main_login_btn"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
-        android:backgroundTint="#10FFFFFF"
-        android:padding="13dp"
-        android:textAllCaps="false"
-        android:textSize="18sp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="#25FFFFFF"
+        android:fontFamily="@font/raleway_bold"
+        android:padding="1dp"
         android:text="Already have an account? Login"
-        android:textColor="@android:color/black"
-        app:cornerRadius="3dp"/>
+        android:textAllCaps="false"
+        android:textColor="#CEFFCF"
+        android:textSize="16sp"
+        app:cornerRadius="70dp" />
 
     <Button
         android:id="@+id/main_join_now_btn"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:backgroundTint="#171717"
-        android:padding="13dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#5B311F5D"
+        android:fontFamily="@font/raleway_semibold"
+        android:padding="1dp"
+        android:text="Don't have an account?Join Now"
         android:textAllCaps="false"
-        android:textSize="18sp"
-        android:text="Don't have an account? Join Now"
         android:textColor="@color/white"
-        app:cornerRadius="3dp"/>
+
+        android:textSize="16sp"
+        app:cornerRadius="70dp" />
 
 
 </LinearLayout>

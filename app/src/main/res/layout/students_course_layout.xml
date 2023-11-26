@@ -2,12 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#CCC8C8"
+    android:backgroundTint="#5E4296"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="20dp"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
-    app:cardElevation="15dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
             android:id="@+id/user_profile_image"
             android:layout_width="96dp"
             android:layout_height="120dp"
-            android:src="@drawable/profile"
-            app:civ_border_color="#FF000000"
+            android:src="@drawable/course_pics"
+            app:civ_border_color="#B5FFFFFF"
             android:layout_marginRight="10dp"
             app:civ_border_width="2dp" />
 
@@ -36,7 +36,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Student name"
                 android:textSize="18dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Student Reg No"
                 android:textSize="18dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Marks Status"
                 android:textSize="18dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
 
