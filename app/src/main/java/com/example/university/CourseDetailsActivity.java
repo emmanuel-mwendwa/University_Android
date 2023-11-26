@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.university.Model.Cart;
 import com.example.university.Model.Courses;
 import com.example.university.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -112,8 +115,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
         final DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("Users").child(Prevalent.currentOnlineUser.getReg_no());
-        DatabaseReference coursesReference = FirebaseDatabase.getInstance().getReference("Courses");
+        DatabaseReference coursesReference = FirebaseDatabase.getInstance().getReference("Courses").child(Prevalent.currentOnlineUser.getYearSemester());
 
+        Query courseQuery = coursesReference.orderByChild("courseCode").equalTo(courseId);
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("courseId", courseId);
@@ -130,6 +134,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         studentMap.put("date", saveCurrentDate);
         studentMap.put("time", saveCurrentTime);
         studentMap.put("studentMarksStatus", "pending");
+        studentMap.put("yearSemester", Prevalent.currentOnlineUser.getYearSemester());
 
         usersReference.child("registered_courses")
                 .child(courseId)
@@ -138,43 +143,57 @@ public class CourseDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            coursesReference.child(courseId)
-                                    .child("students")
-                                    .child(Prevalent.currentOnlineUser.getReg_no())
-                                    .updateChildren(studentMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(CourseDetailsActivity.this, "Course Registered Successfully.", Toast.LENGTH_SHORT).show();
-                                                Includes includes = new Includes().navigateTo(CourseDetailsActivity.this, Student.class);
+                            courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
+                                        String studentRegNo = Prevalent.currentOnlineUser.getReg_no();
+                                        courseSnapshot.getRef().child("students").child(studentRegNo).updateChildren(studentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(CourseDetailsActivity.this, "Course Registered Successfully", Toast.LENGTH_SHORT).show();
+                                                    Includes includes = new Includes().navigateTo(CourseDetailsActivity.this, CartActivity.class);
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
                 });
     }
 
     private void getCourseDetails(String courseId) {
-        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
+        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses").child(Prevalent.currentOnlineUser.getYearSemester());
+        Query courseDetailsQuery = coursesRef.orderByChild("courseCode").equalTo(courseId);
 
-        coursesRef.child(courseId).addValueEventListener(new ValueEventListener() {
+        courseDetailsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Courses courses = snapshot.getValue(Courses.class);
-                    txtcourseName.setText(courses.getCourseName());
-                    txtcourseCode.setText(courses.getCourseCode());
-                    txtcourseLecturer.setText(courses.getLecturerEmail());
+                    for (DataSnapshot courseSnapshot : snapshot.getChildren()) {
+                        Courses courses = courseSnapshot.getValue(Courses.class);
+                        // Assuming txtcourseName, txtcourseCode, txtcourseLecturer are TextViews
+                        txtcourseName.setText(courses.getCourseName());
+                        txtcourseCode.setText(courses.getCourseCode());
+                        txtcourseLecturer.setText(courses.getLecturerEmail());
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle potential errors
+
             }
         });
+
     }
 
     @Override

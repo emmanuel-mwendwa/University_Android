@@ -2,7 +2,7 @@ package com.example.university.Model;
 
 public class StudentClass {
 
-    private String studentName, studentRegNo;
+    private String studentName, studentRegNo, yearSemester;
 
     private double assignment1, assignment2, cat1, cat2, finalExam;
 
@@ -11,7 +11,7 @@ public class StudentClass {
     public StudentClass() {
     }
 
-    public StudentClass(String studentName, String studentRegNo, String studentMarksStatus, double assignment1, double assignment2, double cat1, double cat2, double finalExam) {
+    public StudentClass(String studentName, String studentRegNo, String yearSemester, String studentMarksStatus, double assignment1, double assignment2, double cat1, double cat2, double finalExam) {
         this.studentName = studentName;
         this.studentRegNo = studentRegNo;
         this.assignment1 = assignment1;
@@ -21,6 +21,7 @@ public class StudentClass {
         this.finalExam = finalExam;
         this.overallGrade = calculateOverallGrade();
         this.gradeStatus = calculateGradeStatus();
+        this.yearSemester = yearSemester;
     }
 
     private String calculateOverallGrade() {
@@ -123,5 +124,13 @@ public class StudentClass {
 
     public void setFinalExam(double finalExam) {
         this.finalExam = finalExam;
+    }
+
+    public String getYearSemester() {
+        return yearSemester;
+    }
+
+    public void setYearSemester(String yearSemester) {
+        this.yearSemester = yearSemester;
     }
 }

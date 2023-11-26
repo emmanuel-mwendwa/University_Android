@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/relative_layout_1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:background="@color/colorPrimaryDark"
         android:layout_alignParentTop="true">
 

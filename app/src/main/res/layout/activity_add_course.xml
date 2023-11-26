@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddCourseActivity">
@@ -10,8 +12,6 @@
         android:id="@+id/slogan_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="Add New Course"
         android:textAlignment="center"
@@ -22,46 +22,53 @@
         android:id="@+id/course_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slogan_category"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="80dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/input_design"
         android:hint="Course name"
         android:inputType="text"
-        android:padding="20dp" />
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/course_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/course_name"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="18dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/input_design"
         android:hint="Course code"
         android:inputType="text"
-        android:padding="20dp" />
+        android:padding="15dp" />
 
-    <EditText
-        android:id="@+id/lecturer_email"
+    <Spinner
+        android:id="@+id/spinnerYearSemester"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/course_code"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="18dp"
         android:layout_marginRight="25dp"
-        android:background="@drawable/input_design"
-        android:hint="Lecturer Email"
-        android:inputType="text"
-        android:padding="20dp" />
+        android:layout_marginLeft="25dp"
+        android:padding="8dp"
+        android:entries="@array/year_semester_options"
+        android:prompt="@string/year_semester_prompt"/>
+
+    <Spinner
+        android:id="@+id/spinnerLecturer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:padding="8dp"
+        android:entries="@array/year_semester_options"
+        android:prompt="@string/year_semester_prompt"/>
+
 
     <Button
         android:id="@+id/addNewCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lecturer_email"
         android:text="Add Course"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -69,6 +76,7 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:background="@drawable/buttons"/>
+        android:backgroundTint="#171717"
+        app:cornerRadius="3dp" />
 
-</RelativeLayout>
+</LinearLayout>

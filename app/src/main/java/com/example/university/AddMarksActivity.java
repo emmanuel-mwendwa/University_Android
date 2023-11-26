@@ -40,6 +40,7 @@ public class AddMarksActivity extends AppCompatActivity {
 
         String studentName = intent.getStringExtra("studentName");
         String studentRegNo = intent.getStringExtra("studentRegNo");
+        String studentYearSemester = intent.getStringExtra("studentYearSemester");
 
         txtStudentName = (TextView) findViewById(R.id.editTextStudentName);
         txtStudentRegNo = (TextView) findViewById(R.id.editTextStudentRegNo);
@@ -86,8 +87,9 @@ public class AddMarksActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
+        String studentYearSemester = intent.getStringExtra("studentYearSemester");
 
-        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(studentYearSemester);
 
         Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 

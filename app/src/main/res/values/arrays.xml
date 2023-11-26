@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="year_semester_options">
+        <item>Year 3 Semester 1</item>
+        <item>Year 3 Semester 2</item>
+    </string-array>
+</resources>

@@ -62,7 +62,7 @@ public class Lecturer extends AppCompatActivity {
                 String assignCourse = user.getAssignedCourse();
 
                 // Now, use the assigned course to retrieve the course details
-                databaseReference.child("Courses").orderByChild("lecturerEmail").equalTo(user.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("Courses").child(Prevalent.currentOnlineUser.getYearSemester()).orderByChild("lecturerEmail").equalTo(user.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 

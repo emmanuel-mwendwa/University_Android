@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,8 @@ public class Signup extends AppCompatActivity {
 
     private TextInputLayout inputPasswordLayout, inputConfirmPasswordLayout;
 
+    private Spinner spinnerYearSemester;
+
     boolean valid = true;
 
     private ProgressDialog loadingBar;
@@ -53,6 +56,7 @@ public class Signup extends AppCompatActivity {
         inputConfirmPasswordLayout = (TextInputLayout) findViewById(R.id.register_confirm_password_input);
         isLecturerAccount = (CheckBox) findViewById(R.id.is_Lecturer);
         isStudentAccount = (CheckBox) findViewById(R.id.is_Student);
+        spinnerYearSemester = (Spinner) findViewById(R.id.spinnerYearSemester);
         loadingBar = new ProgressDialog(this);
 
         isStudentAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,12 +110,18 @@ public class Signup extends AppCompatActivity {
             String email = inputEmail.getText().toString();
             String password = inputPasswordLayout.getEditText().getText().toString();
             String confirmPassword = inputConfirmPasswordLayout.getEditText().getText().toString();
+            String selectedYearSemester  = spinnerYearSemester.getSelectedItem().toString();
 
-            ValidateinputEmail(reg, name, email, password, confirmPassword);
+            if (TextUtils.isEmpty(selectedYearSemester)) {
+                Toast.makeText(this, "Select Year and Semester", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            ValidateinputEmail(reg, name, email, password, confirmPassword, selectedYearSemester);
         }
     }
 
-    private void ValidateinputEmail(String reg, String name, String email, String password, String confirmPassword) {
+    private void ValidateinputEmail(String reg, String name, String email, String password, String confirmPassword,  String selectedYearSemester) {
 
         if (password.equals(confirmPassword)) {
             final DatabaseReference RootRef;
@@ -134,6 +144,7 @@ public class Signup extends AppCompatActivity {
                                     userdataMap.put("name", name);
                                     userdataMap.put("email", email);
                                     userdataMap.put("password", password);
+                                    userdataMap.put("yearSemester", selectedYearSemester);
 
                                     // specify the account type
                                     if (isLecturerAccount.isChecked()) {

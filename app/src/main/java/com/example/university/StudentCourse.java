@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.university.Model.Courses;
 import com.example.university.Model.RegisteredStudents;
 import com.example.university.Model.Users;
+import com.example.university.Prevalent.Prevalent;
 import com.example.university.ViewHolder.StudentViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -46,7 +47,7 @@ public class StudentCourse extends AppCompatActivity {
         String courseCode = intent.getStringExtra("courseCode");
         Log.d("CourseCode", String.valueOf(courseCode));
 
-        coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+        coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(Prevalent.currentOnlineUser.getYearSemester());
 
         recyclerView = (RecyclerView) findViewById(R.id.student_recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -95,7 +96,7 @@ public class StudentCourse extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
 
-                                            DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+                                            DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(Prevalent.currentOnlineUser.getYearSemester());
                                             Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 
                                             courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -115,6 +116,7 @@ public class StudentCourse extends AppCompatActivity {
                                                             intent1.putExtra("courseCode", String.valueOf(courseCode));
                                                             intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
                                                             intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));
+                                                            intent1.putExtra("studentYearSemester", String.valueOf(model.getYearSemester()));
                                                             startActivity(intent1);
                                                             finish();
                                                         }

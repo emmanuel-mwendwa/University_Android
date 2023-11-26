@@ -53,7 +53,11 @@ public class Student extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         Paper.init(this);
-        CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
+
+        String yearSemester = Prevalent.currentOnlineUser.getYearSemester();
+        Log.d("currentYear", yearSemester);
+
+        CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses").child(yearSemester);
 
         binding = ActivityStudentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -144,7 +148,8 @@ public class Student extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(Student.this, CourseDetailsActivity.class);
-                                intent.putExtra("pid", model.getCourseId());
+                                intent.putExtra("pid", model.getCourseCode());
+                                Log.d("courseCodeSent", String.valueOf(model.getCourseCode()));
                                 startActivity(intent);
                                 finish();
                             }
