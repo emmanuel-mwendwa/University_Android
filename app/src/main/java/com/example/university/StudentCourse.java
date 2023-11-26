@@ -47,7 +47,7 @@ public class StudentCourse extends AppCompatActivity {
         String courseCode = intent.getStringExtra("courseCode");
         Log.d("CourseCode", String.valueOf(courseCode));
 
-        coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(Prevalent.currentOnlineUser.getYearSemester());
+        coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
 
         recyclerView = (RecyclerView) findViewById(R.id.student_recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -63,7 +63,6 @@ public class StudentCourse extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
-        Log.d("CourseCode", String.valueOf(courseCode));
 
         Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 

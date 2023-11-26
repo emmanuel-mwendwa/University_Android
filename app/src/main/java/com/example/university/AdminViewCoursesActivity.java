@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.university.Model.Courses;
 import com.example.university.ViewHolder.CourseViewHolder;
@@ -28,15 +31,14 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
+    private Spinner spinnerYearSemester;
+
     private Button addMarksButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view_courses);
-
-//        RecyclerView recyclerView = findViewById(R.id.recycler_admin_view_courses);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 
@@ -45,16 +47,30 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        spinnerYearSemester = findViewById(R.id.spinnerYearSemester);
+
+        spinnerYearSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedYearSemester = parent.getItemAtPosition(position).toString();
+                updateRecyclerView(selectedYearSemester);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
-    @Override
-    protected void onStart() {
+    private void updateRecyclerView(String selectedYearSemester) {
 
-        super.onStart();
+        DatabaseReference selectedCoursesRef = CoursesRef.child(selectedYearSemester);
 
         FirebaseRecyclerOptions<Courses> options =
                 new FirebaseRecyclerOptions.Builder<Courses>()
-                        .setQuery(CoursesRef, Courses.class)
+                        .setQuery(selectedCoursesRef, Courses.class)
                         .build();
 
         FirebaseRecyclerAdapter<Courses, CourseViewHolder> adapter =
@@ -70,7 +86,8 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 Intent intent = new Intent(AdminViewCoursesActivity.this, AdminCourseDetailsActivity.class);
-                                intent.putExtra("pid", model.getCourseId());
+                                intent.putExtra("pid", model.getCourseCode());
+                                intent.putExtra("selectedYearSemester", selectedYearSemester);
                                 startActivity(intent);
                                 finish();
                             }
@@ -87,6 +104,13 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
                 };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+//        updateRecyclerView(spinnerYearSemester.getSelectedItem().toString());
     }
 
     @Override

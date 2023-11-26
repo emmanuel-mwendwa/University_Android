@@ -39,6 +39,7 @@ public class AdminEditMarksActivity extends AppCompatActivity {
 
         String studentName = intent.getStringExtra("studentName");
         String studentRegNo = intent.getStringExtra("studentRegNo");
+        String studentYearSemester = intent.getStringExtra("studentYearSemester");
 
         txtStudentName = (TextView) findViewById(R.id.editTextStudentName);
         txtStudentRegNo = (TextView) findViewById(R.id.editTextStudentRegNo);
@@ -86,8 +87,9 @@ public class AdminEditMarksActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
+        String studentYearSemester = intent.getStringExtra("studentYearSemester");
 
-        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(studentYearSemester);
 
         Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 
@@ -125,6 +127,7 @@ public class AdminEditMarksActivity extends AppCompatActivity {
                     Toast.makeText(AdminEditMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
                     Intent intent1 = new Intent(AdminEditMarksActivity.this, AdminStudentCourse.class);
                     intent1.putExtra("courseCode", String.valueOf(courseCode));
+                    intent1.putExtra("selectedYearSemester", String.valueOf(studentYearSemester));
                     startActivity(intent1);
                     finish();
 
@@ -190,5 +193,17 @@ public class AdminEditMarksActivity extends AppCompatActivity {
             editText.setError("Invalid number format");
             return 0.0; // or any other default value, or you can choose to return a special value
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        String selectedYearSemester = getIntent().getStringExtra("selectedYearSemester");
+
+        Intent intent = new Intent(AdminEditMarksActivity.this, AdminCourseDetailsActivity.class);
+        intent.putExtra("selectedYearSemester", String.valueOf(selectedYearSemester));
+        startActivity(intent);
+        finish();
     }
 }

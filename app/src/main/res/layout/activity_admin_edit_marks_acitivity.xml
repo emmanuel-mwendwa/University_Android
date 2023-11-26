@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="56dp"
     tools:context=".AdminEditMarksActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextStudentName"
+        android:textSize="17sp"
+        android:layout_gravity="center"
         android:text="Student Name" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_marginTop="10dp"
         android:id="@+id/editTextStudentRegNo"
         android:layout_below="@+id/editTextStudentName"
         android:text="Student Reg No" />
@@ -65,6 +71,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextExamMarks"
+        android:backgroundTint="#171717"
         android:layout_marginTop="16dp"
-        android:text="Add Marks" />
-</RelativeLayout>
+        android:text="Edit Marks"
+        app:cornerRadius="3dp"/>
+</LinearLayout>

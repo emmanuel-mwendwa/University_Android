@@ -42,11 +42,12 @@ public class AdminStudentCourse extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
+        String selectedYearSemester = intent.getStringExtra("selectedYearSemester");
         Log.d("CourseCode", String.valueOf(courseCode));
 
         txtCourseCode.setText(courseCode);
 
-        coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+        coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(selectedYearSemester);
 
         recyclerView = (RecyclerView) findViewById(R.id.admin_student_recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -61,7 +62,7 @@ public class AdminStudentCourse extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
-        Log.d("CourseCode", String.valueOf(courseCode));
+        String selectedYearSemester = intent.getStringExtra("selectedYearSemester");
 
         Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
         courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,15 +86,17 @@ public class AdminStudentCourse extends AppCompatActivity {
                                 protected void onBindViewHolder(@NonNull StudentViewHolder holder, int position, @NonNull RegisteredStudents model) {
 
 
-                                    holder.txtStudentName.setText("Student Name: " + model.getStudentName());
-                                    holder.txtStudentRegNo.setText("Student Reg No: " + model.getStudentRegNo());
-                                    holder.txtStudentMarksStatus.setText("Student Marks Status: " + model.getStudentMarksStatus());
+                                    holder.txtStudentName.setText("Name: " + model.getStudentName());
+                                    holder.txtStudentRegNo.setText("Reg No: " + model.getStudentRegNo());
+                                    holder.txtStudentMarksStatus.setText("Marks Status: " + model.getStudentMarksStatus());
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
 
-                                            DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+                                            String selectedYearSemester = intent.getStringExtra("selectedYearSemester");
+                                            Log.d("selectedYearSemester", selectedYearSemester);
+                                            DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(selectedYearSemester);
                                             Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseCode);
 
                                             courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,6 +112,7 @@ public class AdminStudentCourse extends AppCompatActivity {
                                                             intent1.putExtra("courseCode", String.valueOf(courseCode));
                                                             intent1.putExtra("studentName", String.valueOf(model.getStudentName()));
                                                             intent1.putExtra("studentRegNo", String.valueOf(model.getStudentRegNo()));
+                                                            intent1.putExtra("studentYearSemester", String.valueOf(model.getYearSemester()));
                                                             startActivity(intent1);
                                                             finish();
                                                     }
@@ -154,7 +158,12 @@ public class AdminStudentCourse extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Includes navigate = new Includes().navigateTo(AdminStudentCourse.this, AdminCourseDetailsActivity.class);
+
+        String selectedYearSemester = getIntent().getStringExtra("selectedYearSemester");
+
+        Intent intent = new Intent(AdminStudentCourse.this, AdminCourseDetailsActivity.class);
+        intent.putExtra("selectedYearSemester", String.valueOf(selectedYearSemester));
+        startActivity(intent);
         finish();
     }
 }

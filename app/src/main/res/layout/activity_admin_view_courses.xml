@@ -16,6 +16,15 @@
         android:gravity="center"
         android:layout_margin="20dp"/>
 
+    <Spinner
+        android:id="@+id/spinnerYearSemester"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="7dp"
+        android:entries="@array/year_semester_options" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_admin_view_courses"
         android:layout_width="match_parent"

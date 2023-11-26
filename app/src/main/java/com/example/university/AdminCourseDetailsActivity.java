@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.university.Model.Courses;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class AdminCourseDetailsActivity extends AppCompatActivity {
@@ -30,6 +33,7 @@ public class AdminCourseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_course_details);
 
         courseId = getIntent().getStringExtra("pid");
+        String selectedYearSemester = getIntent().getStringExtra("selectedYearSemester");
 
         registerCourse = findViewById(R.id.admin_register_course_button);
         txtcourseName = findViewById(R.id.admin_course_name_details);
@@ -43,6 +47,7 @@ public class AdminCourseDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCourseDetailsActivity.this, AdminStudentCourse.class);
                 intent.putExtra("courseCode", String.valueOf(txtcourseCode.getText()));
+                intent.putExtra("selectedYearSemester", String.valueOf(selectedYearSemester));
                 startActivity(intent);
                 finish();
             }
@@ -50,22 +55,34 @@ public class AdminCourseDetailsActivity extends AppCompatActivity {
     }
 
     private void getCourseDetails(String courseId) {
-        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 
-        coursesRef.child(courseId).addValueEventListener(new ValueEventListener() {
+        String selectedYearSemester = getIntent().getStringExtra("selectedYearSemester");
+
+        DatabaseReference coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses").child(selectedYearSemester);
+
+        Query courseQuery = coursesRef.orderByChild("courseCode").equalTo(courseId);
+
+        courseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Courses courses = snapshot.getValue(Courses.class);
-                    txtcourseName.setText(courses.getCourseName());
-                    txtcourseCode.setText(courses.getCourseCode());
-                    txtcourseLecturer.setText(courses.getLecturerEmail());
+                    DataSnapshot courseSnapshot = snapshot.getChildren().iterator().next();
+                    Courses courses = courseSnapshot.getValue(Courses.class);
+                    Log.d("coursesValuesFetched", String.valueOf(courseSnapshot));
+                    if (courses != null) {
+                        txtcourseName.setText(courses.getCourseName());
+                        txtcourseCode.setText(courses.getCourseCode());
+                        txtcourseLecturer.setText(courses.getLecturerEmail());
+                    }
+                    else {
+                        Toast.makeText(AdminCourseDetailsActivity.this, "Error retrieving course details", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle potential errors
+
             }
         });
     }
