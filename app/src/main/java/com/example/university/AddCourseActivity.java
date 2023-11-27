@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.university.databinding.ActivityAddCourseBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +31,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddCourseActivity extends AppCompatActivity {
+public class AddCourseActivity extends AdminDrawerActivity {
+
+    ActivityAddCourseBinding activityAddCourseBinding;
 
     private Button addNewCourseBtn;
     private EditText inputCourseName, inputCourseCode;
@@ -42,7 +45,9 @@ public class AddCourseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
+        activityAddCourseBinding = ActivityAddCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityAddCourseBinding.getRoot());
+        allocateActivityTitle("New Course");
 
         addNewCourseBtn = findViewById(R.id.addNewCourse);
         inputCourseCode = findViewById(R.id.course_code);
@@ -76,14 +81,6 @@ public class AddCourseActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
 
         coursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
-
-//        addNewCourseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateLecturerAssignedCourse(inputLecturer, inputCourseCode.getText().toString());
-//                Log.d("Selected Lecturer", String.valueOf(inputLecturer));
-//            }
-//        });
 
         spinnerYearSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

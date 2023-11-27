@@ -7,16 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.university.databinding.ActivityAdminBinding;
+
 import io.paperdb.Paper;
 
-public class Admin extends AppCompatActivity {
+public class Admin extends AdminDrawerActivity {
+
+    ActivityAdminBinding activityAdminBinding;
 
     private Button LogoutBtn, addCourse, addAccount, generateReport, editMarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        activityAdminBinding = ActivityAdminBinding.inflate(getLayoutInflater());
+        setContentView(activityAdminBinding.getRoot());
+        allocateActivityTitle("Dashboard");
 
         LogoutBtn = (Button) findViewById(R.id.adminLogoutButton);
         addCourse = (Button) findViewById(R.id.addNewCourseActivity);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_admin_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+
+        <item android:id="@+id/nav_add_account"
+            android:icon="@drawable/new_account_icon"
+            android:title="New Account" />
+
+        <item android:id="@+id/nav_add_course"
+            android:icon="@drawable/new_course_icon"
+            android:title="New Course" />
+
+        <item android:id="@+id/nav_edit_marks"
+            android:icon="@drawable/edit_marks_icon"
+            android:title="Edit Marks" />
+
+        <item android:id="@+id/nav_generate_reports"
+            android:icon="@drawable/generate_reports_icon"
+            android:title="Reports" />
+
+        <item android:id="@+id/nav_admin_logout"
+            android:icon="@drawable/baseline_logout_24"
+            android:title="Log Out" />
+    </group>
+</menu>

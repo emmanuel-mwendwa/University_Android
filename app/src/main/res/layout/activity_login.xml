@@ -25,6 +25,7 @@
         android:id="@+id/login_email_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableRight="@drawable/baseline_email_24"
         android:background="@drawable/input_design"
         android:padding="14dp"
         android:layout_marginLeft="15dp"

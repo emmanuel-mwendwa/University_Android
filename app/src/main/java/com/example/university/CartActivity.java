@@ -45,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+
         recyclerView = findViewById(R.id.course_cart_list);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
