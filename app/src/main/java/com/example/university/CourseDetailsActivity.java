@@ -124,6 +124,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         cartMap.put("courseName", txtcourseName.getText().toString());
         cartMap.put("courseCode", txtcourseCode.getText().toString());
         cartMap.put("courseLecturer", txtcourseLecturer.getText().toString());
+        cartMap.put("courseGradeStatus", "pending");
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
 
@@ -135,6 +136,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
         studentMap.put("time", saveCurrentTime);
         studentMap.put("studentMarksStatus", "pending");
         studentMap.put("yearSemester", Prevalent.currentOnlineUser.getYearSemester());
+
+        final HashMap<String, Object> studentSemesterGradeMap = new HashMap<>();
+        studentSemesterGradeMap.put("semesterGradeStatus", "pending");
+
+        DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("Users").child(Prevalent.currentOnlineUser.getReg_no());
+        studentRef.updateChildren(studentSemesterGradeMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("semesterGrade", "Successful");
+                }
+            }
+        });
 
         usersReference.child("registered_courses")
                 .child(courseId)

@@ -123,10 +123,24 @@ public class AddMarksActivity extends AppCompatActivity {
                     updateMarksStatus.put("studentMarksStatus", "available");
                     studentMarksStatusSnapshot.getRef().updateChildren(updateMarksStatus);
 
+                    // Update the students courseGradeStatus
+                    DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("Users").child(studentRegNo).child("registered_courses").child(courseCode);
+                    Map<String, Object> updateGradeStatus = new HashMap<>();
+                    updateGradeStatus.put("courseGradeStatus", gradeStatus);
+                    studentRef.updateChildren(updateGradeStatus);
+
+                    // Update the students semester overall grade
+//                    DatabaseReference studentsRef = FirebaseDatabase.getInstance().getReference("Users").child(studentRegNo).child("semesterGradeStatus");
+//                    Map<String, Object> updateGradeStatus = new HashMap<>();
+//                    updateGradeStatus.put("courseGradeStatus", gradeStatus);
+//                    studentRef.updateChildren(updateGradeStatus);
+
+
                     // Start the StudentCourse activity
                     Toast.makeText(AddMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
                     Intent intent1 = new Intent(AddMarksActivity.this, StudentCourse.class);
                     intent1.putExtra("courseCode", String.valueOf(courseCode));
+                    intent1.putExtra("selectedYearSemester", String.valueOf(studentYearSemester));
                     startActivity(intent1);
                     finish();
 

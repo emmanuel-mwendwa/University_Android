@@ -17,6 +17,7 @@ import android.widget.Spinner;
 
 import com.example.university.Model.Courses;
 import com.example.university.ViewHolder.CourseViewHolder;
+import com.example.university.databinding.ActivityAdminViewCoursesBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminViewCoursesActivity extends AppCompatActivity {
+public class AdminViewCoursesActivity extends AdminDrawerActivity {
 
+    ActivityAdminViewCoursesBinding activityAdminViewCoursesBinding;
     private DatabaseReference CoursesRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -38,7 +40,9 @@ public class AdminViewCoursesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_view_courses);
+        activityAdminViewCoursesBinding = ActivityAdminViewCoursesBinding.inflate(getLayoutInflater());
+        setContentView(activityAdminViewCoursesBinding.getRoot());
+        allocateActivityTitle("All Courses");
 
         CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses");
 

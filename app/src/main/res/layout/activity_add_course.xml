@@ -8,16 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".AddCourseActivity">
 
-    <TextView
-        android:id="@+id/slogan_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Add New Course"
-        android:textAlignment="center"
-        android:textSize="26sp"
-        android:textStyle="bold"/>
-
     <EditText
         android:id="@+id/course_name"
         android:layout_width="match_parent"

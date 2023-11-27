@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.university.databinding.ActivityAdminEditMarksAcitivityBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminEditMarksActivity extends AppCompatActivity {
+public class AdminEditMarksActivity extends AdminDrawerActivity {
+
+    ActivityAdminEditMarksAcitivityBinding activityAdminEditMarksAcitivityBinding;
 
     TextView txtStudentName, txtStudentRegNo;
     EditText txtAssignment1, txtAssignment2, txtCat1, txtCat2, txtExam;
@@ -32,7 +35,8 @@ public class AdminEditMarksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_edit_marks_acitivity);
+        activityAdminEditMarksAcitivityBinding = ActivityAdminEditMarksAcitivityBinding.inflate(getLayoutInflater());
+        setContentView(activityAdminEditMarksAcitivityBinding.getRoot());
 
         Intent intent = getIntent();
 
@@ -53,6 +57,8 @@ public class AdminEditMarksActivity extends AppCompatActivity {
 
         txtStudentName.setText(studentName);
         txtStudentRegNo.setText(studentRegNo);
+
+        allocateActivityTitle(txtStudentName.getText().toString());
 
         studentsRef = FirebaseDatabase.getInstance().getReference();
 
@@ -122,6 +128,12 @@ public class AdminEditMarksActivity extends AppCompatActivity {
                     Map<String, Object> updateMarksStatus = new HashMap<>();
                     updateMarksStatus.put("studentMarksStatus", "available");
                     studentMarksStatusSnapshot.getRef().updateChildren(updateMarksStatus);
+
+                    // Update the students courseGradeStatus
+                    DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("Users").child(studentRegNo).child("registered_courses").child(courseCode);
+                    Map<String, Object> updateGradeStatus = new HashMap<>();
+                    updateGradeStatus.put("courseGradeStatus", gradeStatus);
+                    studentRef.updateChildren(updateGradeStatus);
 
                     // Start the StudentCourse activity
                     Toast.makeText(AdminEditMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.university.Model.RegisteredStudents;
 import com.example.university.ViewHolder.StudentViewHolder;
+import com.example.university.databinding.ActivityAdminStudentCourseBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class AdminStudentCourse extends AppCompatActivity {
+public class AdminStudentCourse extends AdminDrawerActivity {
 
+    ActivityAdminStudentCourseBinding activityAdminStudentCourseBinding;
     private DatabaseReference coursesRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -36,7 +38,9 @@ public class AdminStudentCourse extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_student_course);
+        activityAdminStudentCourseBinding = ActivityAdminStudentCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityAdminStudentCourseBinding.getRoot());
+        allocateActivityTitle("Registered Students");
 
         txtCourseCode = (TextView) findViewById(R.id.admin_recycler_course_name);
 

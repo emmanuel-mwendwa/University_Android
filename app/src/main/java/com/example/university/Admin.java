@@ -15,7 +15,7 @@ public class Admin extends AdminDrawerActivity {
 
     ActivityAdminBinding activityAdminBinding;
 
-    private Button LogoutBtn, addCourse, addAccount, generateReport, editMarks;
+    private Button addCourse, addAccount, generateReport, editMarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,6 @@ public class Admin extends AdminDrawerActivity {
         setContentView(activityAdminBinding.getRoot());
         allocateActivityTitle("Dashboard");
 
-        LogoutBtn = (Button) findViewById(R.id.adminLogoutButton);
         addCourse = (Button) findViewById(R.id.addNewCourseActivity);
         addAccount = (Button) findViewById(R.id.addNewAccountActivity);
         generateReport = (Button) findViewById(R.id.generateReportsActivity);
@@ -33,7 +32,7 @@ public class Admin extends AdminDrawerActivity {
         addAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Includes().navigateTo(Admin.this, Signup.class);
+                new Includes().navigateTo(Admin.this, AdminSignUp.class);
             }
         });
 
@@ -58,13 +57,5 @@ public class Admin extends AdminDrawerActivity {
             }
         });
 
-        LogoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Paper.book().destroy();
-
-                new Includes().navigateTo(Admin.this, MainActivity.class);
-            }
-        });
     }
 }

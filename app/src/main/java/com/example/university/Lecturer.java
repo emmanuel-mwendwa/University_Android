@@ -81,8 +81,12 @@ public class Lecturer extends AppCompatActivity {
                                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+
+                                        String selectedYearSemester = Prevalent.currentOnlineUser.getYearSemester();
+
                                         Intent intent = new Intent(Lecturer.this, StudentCourse.class);
                                         intent.putExtra("courseCode", sendCourseCode);
+                                        intent.putExtra("selectedYearSemester", String.valueOf(selectedYearSemester));
                                         startActivity(intent);
                                         finish();
                                     }

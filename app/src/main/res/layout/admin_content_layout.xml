@@ -14,7 +14,7 @@
             android:id="@+id/adminToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="#DF171717"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             app:titleTextColor="@color/white" />
         

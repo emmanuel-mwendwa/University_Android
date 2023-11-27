@@ -45,9 +45,10 @@ public class StudentCourse extends AppCompatActivity {
 
         Intent intent = getIntent();
         String courseCode = intent.getStringExtra("courseCode");
+        String selectedYearSemester = intent.getStringExtra("selectedYearSemester");
         Log.d("CourseCode", String.valueOf(courseCode));
 
-        coursesRef = FirebaseDatabase.getInstance().getReference("Courses");
+        coursesRef = FirebaseDatabase.getInstance().getReference("Courses").child(selectedYearSemester);
 
         recyclerView = (RecyclerView) findViewById(R.id.student_recycler_menu);
         recyclerView.setHasFixedSize(true);
