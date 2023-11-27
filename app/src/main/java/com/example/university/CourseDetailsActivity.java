@@ -88,7 +88,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getChildrenCount() < 5) {
+                        if (dataSnapshot.getChildrenCount() < 6) {
                             // The user has not reached the maximum limit (5 courses), proceed to add the course
                             addingToRegisteredCoursesList();
                         } else {
@@ -138,10 +138,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
         studentMap.put("yearSemester", Prevalent.currentOnlineUser.getYearSemester());
 
         final HashMap<String, Object> studentSemesterGradeMap = new HashMap<>();
-        studentSemesterGradeMap.put("semesterGradeStatus", "pending");
+        studentSemesterGradeMap.put("semesterGradeStatus", "Pending");
 
         DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference("Users").child(Prevalent.currentOnlineUser.getReg_no());
-        studentRef.updateChildren(studentSemesterGradeMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        studentRef.child("semesterGrade").updateChildren(studentSemesterGradeMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

@@ -1,7 +1,8 @@
 package com.example.university.Model;
 
 public class StudentReports {
-    private String email, name, password, reg_no, yearSemester, semesterGradeStatus;
+    private String email, name, password, reg_no, yearSemester;
+    private SemesterGrade semesterGrade;
 
     public StudentReports() {
 
@@ -13,7 +14,6 @@ public class StudentReports {
         this.password = password;
         this.reg_no = reg_no;
         this.yearSemester = yearSemester;
-        this.semesterGradeStatus = semesterGradeStatus;
     }
 
     public String getEmail() {
@@ -57,11 +57,13 @@ public class StudentReports {
         this.yearSemester = yearSemester;
     }
 
-    public String getSemesterGradeStatus() {
-        return semesterGradeStatus;
+    public SemesterGrade getSemesterGrade() {
+        return semesterGrade;
     }
 
-    public void setSemesterGradeStatus(String semesterGradeStatus) {
-        this.semesterGradeStatus = semesterGradeStatus;
+    public void setSemesterGrade(SemesterGrade semesterGrade) {
+        this.semesterGrade = semesterGrade;
     }
+
+
 }

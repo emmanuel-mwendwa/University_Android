@@ -154,10 +154,10 @@ public class AdminEditMarksActivity extends AdminDrawerActivity {
 
                             // Update semesterGradeStatus based on the result
                             if (allPassed) {
-                                studentsGradeRef.child("semesterGradeStatus").setValue("Pass");
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pass");
                             }
                             else {
-                                studentsGradeRef.child("semesterGradeStatus").setValue("Fail");
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Fail");
                             }
                         }
 

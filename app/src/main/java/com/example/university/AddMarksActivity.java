@@ -131,7 +131,7 @@ public class AddMarksActivity extends AppCompatActivity {
 
                     // Update the students semester overall grade
                     DatabaseReference studentsGradeRef = FirebaseDatabase.getInstance().getReference("Users").child(studentRegNo);
-                    studentsGradeRef.child("registered_courses").addListenerForSingleValueEvent(new ValueEventListener() {
+                    studentsGradeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             boolean allPassed = true;
@@ -148,10 +148,10 @@ public class AddMarksActivity extends AppCompatActivity {
 
                             // Update semesterGradeStatus based on the result
                             if (allPassed) {
-                                studentsGradeRef.child("semesterGradeStatus").setValue("Pass");
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pass");
                                 }
                             else {
-                                studentsGradeRef.child("semesterGradeStatus").setValue("Fail");
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Fail");
                             }
                         }
 

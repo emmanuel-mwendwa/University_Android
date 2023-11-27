@@ -80,6 +80,7 @@ public class ReportTypeActivity extends AdminDrawerActivity {
 
                     }
                 });
+                displayReports();
             }
 
             @Override
@@ -94,7 +95,9 @@ public class ReportTypeActivity extends AdminDrawerActivity {
         String selectedYearSemester = spinnerYearSemester.getSelectedItem().toString();
         String selectedReportType = spinnerReportType.getSelectedItem().toString();
 
-        Query studentsOnlyRef = StudentsResultsRef.orderByChild("semesterGradeStatus").equalTo(selectedReportType);
+        Query studentsOnlyRef = StudentsResultsRef.orderByChild("yearSemester").equalTo(selectedYearSemester);
+
+//        Query studentGradeType = studentsOnlyRef.getRef().orderByChild("semesterGradeStatus").equalTo(selectedReportType);
 
         //         Set up the FirebaseRecyclerAdapter
         FirebaseRecyclerOptions<StudentReports> options = new FirebaseRecyclerOptions.Builder<StudentReports>()
@@ -105,9 +108,16 @@ public class ReportTypeActivity extends AdminDrawerActivity {
                 new FirebaseRecyclerAdapter<StudentReports, ReportsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ReportsViewHolder holder, int position, @NonNull StudentReports model) {
-                        // Display students based on the selected report type and their grade status
-                        holder.txtStudentName.setText(model.getName());
-                        holder.txtStudentRegNo.setText(model.getReg_no());
+                        // Filter students based on the selected report type
+                        if (model.getSemesterGrade() != null && model.getSemesterGrade().getSemesterGradeStatus().equals(selectedReportType)) {
+                            // Display students based on the selected report type and their grade status
+                            holder.txtStudentName.setText(model.getName());
+                            holder.txtStudentRegNo.setText(model.getReg_no());
+                        }
+                        else {
+                            holder.itemView.setVisibility(View.GONE);
+                        }
+
                     }
 
                     @NonNull

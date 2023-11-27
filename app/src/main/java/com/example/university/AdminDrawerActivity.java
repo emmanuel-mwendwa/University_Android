@@ -87,6 +87,11 @@ public class AdminDrawerActivity extends AppCompatActivity implements Navigation
             overridePendingTransition(0, 0);
         }
 
+        else if (item.getItemId() == R.id.nav_generate_reports) {
+            startActivity(new Intent(this, ReportTypeActivity.class));
+            overridePendingTransition(0, 0);
+        }
+
         else if (item.getItemId() == R.id.nav_admin_logout) {
             showLogoutConfirmationDialog();
         }
