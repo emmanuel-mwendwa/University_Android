@@ -135,6 +135,38 @@ public class AdminEditMarksActivity extends AdminDrawerActivity {
                     updateGradeStatus.put("courseGradeStatus", gradeStatus);
                     studentRef.updateChildren(updateGradeStatus);
 
+                    // Update the students semester overall grade
+                    DatabaseReference studentsGradeRef = FirebaseDatabase.getInstance().getReference("Users").child(studentRegNo);
+                    studentsGradeRef.child("registered_courses").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            boolean allPassed = true;
+
+                            // Check if all courses are passed
+                            for (DataSnapshot courseGradeSnapshot : snapshot.getChildren()) {
+                                String courseGradeStatus = courseGradeSnapshot.child("courseGradeStatus").getValue(String.class);
+
+                                if (!"Pass".equals(courseGradeStatus)) {
+                                    allPassed = false;
+                                    break;
+                                }
+                            }
+
+                            // Update semesterGradeStatus based on the result
+                            if (allPassed) {
+                                studentsGradeRef.child("semesterGradeStatus").setValue("Pass");
+                            }
+                            else {
+                                studentsGradeRef.child("semesterGradeStatus").setValue("Fail");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     // Start the StudentCourse activity
                     Toast.makeText(AdminEditMarksActivity.this, "Marks added successfully", Toast.LENGTH_SHORT).show();
                     Intent intent1 = new Intent(AdminEditMarksActivity.this, AdminStudentCourse.class);
