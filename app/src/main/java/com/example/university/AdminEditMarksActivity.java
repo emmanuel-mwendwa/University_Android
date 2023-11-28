@@ -162,6 +162,7 @@ public class AdminEditMarksActivity extends AdminDrawerActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             boolean allPassed = true;
+                            boolean anyPending = false;
 
                             // Check if all courses are passed
                             for (DataSnapshot courseGradeSnapshot : snapshot.getChildren()) {
@@ -169,13 +170,19 @@ public class AdminEditMarksActivity extends AdminDrawerActivity {
 
                                 if (!"Pass".equals(courseGradeStatus)) {
                                     allPassed = false;
-                                    break;
+                                    if ("Pending".equals(courseGradeStatus)) {
+                                        anyPending = true;
+                                        break;
+                                    }
                                 }
                             }
 
                             // Update semesterGradeStatus based on the result
                             if (allPassed) {
                                 studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pass");
+                            }
+                            else if (anyPending) {
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pending");
                             }
                             else {
                                 studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Fail");

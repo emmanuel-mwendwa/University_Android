@@ -124,7 +124,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         cartMap.put("courseName", txtcourseName.getText().toString());
         cartMap.put("courseCode", txtcourseCode.getText().toString());
         cartMap.put("courseLecturer", txtcourseLecturer.getText().toString());
-        cartMap.put("courseGradeStatus", "pending");
+        cartMap.put("courseGradeStatus", "Pending");
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
 
@@ -134,7 +134,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         studentMap.put("studentEmail", Prevalent.currentOnlineUser.getEmail());
         studentMap.put("date", saveCurrentDate);
         studentMap.put("time", saveCurrentTime);
-        studentMap.put("studentMarksStatus", "pending");
+        studentMap.put("studentMarksStatus", "Pending");
         studentMap.put("yearSemester", Prevalent.currentOnlineUser.getYearSemester());
 
         final HashMap<String, Object> studentSemesterGradeMap = new HashMap<>();

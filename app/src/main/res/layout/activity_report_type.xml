@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="10dp"
     android:layout_gravity="center"
     tools:context=".ReportTypeActivity">
 
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:padding="8dp"
         android:entries="@array/year_semester_options"
         android:prompt="@string/year_semester_prompt"/>
@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:padding="8dp"
         android:entries="@array/report_type"
         />
@@ -59,9 +59,9 @@
         android:id="@+id/recycler_admin_view_reports"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         />
 
 </LinearLayout>

@@ -156,6 +156,7 @@ public class AddMarksActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             boolean allPassed = true;
+                            boolean anyPending = false;
 
                             // Check if all courses are passed
                             for (DataSnapshot courseGradeSnapshot : snapshot.getChildren()) {
@@ -163,7 +164,10 @@ public class AddMarksActivity extends AppCompatActivity {
 
                                 if (!"Pass".equals(courseGradeStatus)) {
                                     allPassed = false;
-                                    break;
+                                    if ("Pending".equals(courseGradeStatus)) {
+                                        anyPending = true;
+                                        break;
+                                    }
                                 }
                             }
 
@@ -171,6 +175,9 @@ public class AddMarksActivity extends AppCompatActivity {
                             if (allPassed) {
                                 studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pass");
                                 }
+                            else if (anyPending) {
+                                studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Pending");
+                            }
                             else {
                                 studentsGradeRef.child("semesterGrade").child("semesterGradeStatus").setValue("Fail");
                             }

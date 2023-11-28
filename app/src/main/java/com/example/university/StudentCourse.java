@@ -108,7 +108,7 @@ public class StudentCourse extends AppCompatActivity {
                                                                 .child(model.getStudentRegNo())
                                                                 .child("studentMarksStatus");
 
-                                                        if (studentMarksStatus.exists() && "available".equals(studentMarksStatus.getValue(String.class))) {
+                                                        if (studentMarksStatus.exists() && "Available".equals(studentMarksStatus.getValue(String.class))) {
                                                             Toast.makeText(StudentCourse.this, "Marks are already available for this student!", Toast.LENGTH_SHORT).show();
                                                         }
                                                         else {
