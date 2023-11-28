@@ -3,9 +3,9 @@ package com.example.university;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -18,38 +18,32 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.university.Model.Cart;
 import com.example.university.Prevalent.Prevalent;
 import com.google.android.material.navigation.NavigationView;
 
 import io.paperdb.Paper;
 
-public class AdminDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout drawerLayout;
+public class StudentDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    DrawerLayout drawerLayout;
 
     @Override
     public void setContentView(View view) {
-        if (drawerLayout == null) {
-            setupDrawerLayout(view);
-        } else {
-            updateContentView(view);
-        }
-    }
-
-    private void setupDrawerLayout(View view) {
-        drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_admin_drawer, null);
-        FrameLayout container = drawerLayout.findViewById(R.id.adminActivityContainer);
+        drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_student_drawer, null);
+        FrameLayout container = drawerLayout.findViewById(R.id.studentActivityContainer);
         container.addView(view);
         super.setContentView(drawerLayout);
 
-        Toolbar toolbar = drawerLayout.findViewById(R.id.adminToolBar);
+        Toolbar toolbar = drawerLayout.findViewById(R.id.studentToolBar);
         setSupportActionBar(toolbar);
 
-        NavigationView navigationView = drawerLayout.findViewById(R.id.admin_nav_view);
+        NavigationView navigationView = drawerLayout.findViewById(R.id.student_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView  = navigationView.getHeaderView(0);
-        TextView userProfileName = headerView.findViewById(R.id.admin_profile_name);
+        TextView userProfileName = headerView.findViewById(R.id.user_profile_name);
 
         userProfileName.setText(Prevalent.currentOnlineUser.getName());
 
@@ -64,42 +58,25 @@ public class AdminDrawerActivity extends AppCompatActivity implements Navigation
         toggle.syncState();
     }
 
-    private void updateContentView(View view) {
-        FrameLayout container = drawerLayout.findViewById(R.id.adminActivityContainer);
-        container.removeAllViews();
-        container.addView(view);
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation item selection
-        // ...
-        if (item.getItemId() == R.id.nav_admin_home) {
-                startActivity(new Intent(this, Admin.class));
-                overridePendingTransition(0, 0);
-        }
 
-        else if (item.getItemId() == R.id.nav_add_course) {
-            startActivity(new Intent(this, AddCourseActivity.class));
+        if (item.getItemId() == R.id.nav_student_home) {
+            startActivity(new Intent(this, Student.class));
             overridePendingTransition(0, 0);
         }
 
-        else if (item.getItemId() == R.id.nav_edit_marks) {
-            startActivity(new Intent(this, AdminViewCoursesActivity.class));
+        else if (item.getItemId() == R.id.nav_registered_courses) {
+            startActivity(new Intent(this, CartActivity.class));
             overridePendingTransition(0, 0);
         }
 
-        else if (item.getItemId() == R.id.nav_add_account) {
-            startActivity(new Intent(this, AdminSignUp.class));
+        else if (item.getItemId() == R.id.nav_student_settings) {
+            startActivity(new Intent(this, Settings.class));
             overridePendingTransition(0, 0);
         }
 
-        else if (item.getItemId() == R.id.nav_generate_reports) {
-            startActivity(new Intent(this, ReportTypeActivity.class));
-            overridePendingTransition(0, 0);
-        }
-
-        else if (item.getItemId() == R.id.nav_admin_logout) {
+        else if (item.getItemId() == R.id.nav_student_logout) {
             showLogoutConfirmationDialog();
         }
 

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.university.Model.Cart;
 import com.example.university.Prevalent.Prevalent;
 import com.example.university.ViewHolder.CartViewHolder;
+import com.example.university.databinding.ActivityCartBinding;
+import com.example.university.databinding.ActivityStudentBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends StudentDrawerActivity {
+
+    private ActivityCartBinding activityCartBinding;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -43,15 +47,14 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-
+        activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
+        setContentView(activityCartBinding.getRoot());
+        allocateActivityTitle("Registered Courses");
 
         recyclerView = findViewById(R.id.course_cart_list);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        txtTotalCourses = (TextView) findViewById(R.id.total_courses);
 
     }
 
@@ -76,6 +79,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.txtCartCourseName.setText(model.getCourseName());
                 holder.txtCartCourseCode.setText(model.getCourseCode());
                 holder.txtCartLecturerEmail.setText(model.getCourseLecturer());
+                holder.txtCartCourseResults.setText(model.getCourseGradeStatus());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

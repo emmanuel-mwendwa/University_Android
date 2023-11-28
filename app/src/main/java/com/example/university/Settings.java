@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.canhub.cropper.CropImage;
 import com.example.university.Prevalent.Prevalent;
+import com.example.university.databinding.ActivitySettingsBinding;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +37,9 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Settings extends AppCompatActivity {
+public class Settings extends StudentDrawerActivity {
+
+    private ActivitySettingsBinding activitySettingsBinding;
 
     private CircleImageView profileImageView;
     private EditText fullnameEditText, emailEditText;
@@ -51,7 +54,9 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        activitySettingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        setContentView(activitySettingsBinding.getRoot());
+        allocateActivityTitle("Settings");
 
         FirebaseApp.initializeApp(this);
         storageProfilePictureRef = FirebaseStorage.getInstance().getReference().child("Profile pictures");

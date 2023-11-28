@@ -36,21 +36,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
-public class Student extends AppCompatActivity {
+public class Student extends StudentDrawerActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityStudentBinding binding;
+    private ActivityStudentBinding activityStudentBinding;
     private DatabaseReference CoursesRef;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        setContentView(R.layout.activity_student);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        activityStudentBinding = ActivityStudentBinding.inflate(getLayoutInflater());
+        setContentView(activityStudentBinding.getRoot());
 
         Paper.init(this);
 
@@ -59,31 +57,8 @@ public class Student extends AppCompatActivity {
 
         CoursesRef = FirebaseDatabase.getInstance().getReference().child("Courses").child(yearSemester);
 
-        binding = ActivityStudentBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.appBarStudent.toolbar);
-        binding.appBarStudent.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Includes includes = new Includes().navigateTo(Student.this, CartActivity.class);
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_course_registration, R.id.nav_results)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_student);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-        View headerView = navigationView.getHeaderView(0);
-        CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
-        TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
+//        CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
+//        TextView userNameTextView = findViewById(R.id.user_profile_name);
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -91,39 +66,14 @@ public class Student extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         if (Prevalent.currentOnlineUser != null) {
-            userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+//            userNameTextView.setText(Prevalent.currentOnlineUser.getName());
         }
         else {
             startActivity(new Intent(Student.this, Login.class));
             finish();
         }
 
-        NavigationView navigationView1 = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
 
-                if( id == R.id.nav_logout) {
-                    logout();
-                    return true;
-                }
-                else if (id == R.id.nav_settings) {
-                    Intent intent = new Intent(Student.this, Settings.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-                else if (id == R.id.nav_course_registration) {
-                    Intent intent = new Intent(Student.this, CartActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                }
-
-                return false;
-            }
-        });
     }
 
     @Override
@@ -169,36 +119,6 @@ public class Student extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("MenuItemClicked", "MenuItem clicked: "+ item.getItemId());
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        Log.d("Logout", "Logout method called");
-        Paper.book().destroy();
-
-        Intent intent = new Intent(Student.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.student, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_student);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

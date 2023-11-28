@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".StudentDrawerActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminSignUp"
             android:exported="false" />
         <activity

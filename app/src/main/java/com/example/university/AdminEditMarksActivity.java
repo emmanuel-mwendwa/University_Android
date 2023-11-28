@@ -82,6 +82,27 @@ public class AdminEditMarksActivity extends AdminDrawerActivity {
         double cat2 = parseDoubleFromEditText(txtCat2);
         double finalExam = parseDoubleFromEditText(txtExam);
 
+        // Check if total assignment marks are not more than 10
+        if (assignment1 + assignment2 > 10) {
+            // Show an error or handle the situation (e.g., display a Toast)
+            Toast.makeText(this, "Total assignment marks cannot be more than 10", Toast.LENGTH_SHORT).show();
+            return; // Stop further processing
+        }
+
+// Check if total cat marks are not more than 20
+        if (cat1 + cat2 > 20) {
+            // Show an error or handle the situation (e.g., display a Toast)
+            Toast.makeText(this, "Total cat marks cannot be more than 20", Toast.LENGTH_SHORT).show();
+            return; // Stop further processing
+        }
+
+// Check if exam marks are not more than 70
+        if (finalExam > 70) {
+            // Show an error or handle the situation (e.g., display a Toast)
+            Toast.makeText(this, "Exam marks cannot be more than 70", Toast.LENGTH_SHORT).show();
+            return; // Stop further processing
+        }
+
         // Calculate totalMarks
         double totalMarks = (assignment1 + assignment2 + cat1 + cat2 + finalExam);
 

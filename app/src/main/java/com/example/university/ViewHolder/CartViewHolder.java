@@ -11,7 +11,7 @@ import com.example.university.R;
 
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtCartCourseName, txtCartCourseCode, txtCartLecturerEmail;
+    public TextView txtCartCourseName, txtCartCourseCode, txtCartLecturerEmail, txtCartCourseResults;
     private ItemClickListener itemClickListener;
 
     public CartViewHolder(@NonNull View itemView) {
@@ -20,6 +20,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         txtCartCourseName = (TextView)  itemView.findViewById(R.id.cart_course_name);
         txtCartCourseCode = (TextView) itemView.findViewById(R.id.cart_course_code);
         txtCartLecturerEmail = (TextView) itemView.findViewById(R.id.cart_course_lecturer);
+        txtCartCourseResults = (TextView) itemView.findViewById(R.id.cart_course_results);
     }
 
     @Override
